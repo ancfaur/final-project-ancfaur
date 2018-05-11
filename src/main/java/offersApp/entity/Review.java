@@ -3,6 +3,7 @@ package offersApp.entity;
 import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Review {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -18,15 +19,17 @@ public class Review {
 
     private Date date;
     private int noStars;
+    private String description;
 
     public Review() {
     }
 
-    public Review(Offer offer, User user, Date date, int noStars) {
+    public Review(Offer offer, User user, Date date, int noStars, String description) {
         this.offer = offer;
         this.user = user;
         this.date = date;
         this.noStars = noStars;
+        this.description = description;
     }
 
     public Long getId() {
@@ -67,5 +70,30 @@ public class Review {
 
     public void setNoStars(int noStars) {
         this.noStars = noStars;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Review)) {
+            return false;
+        }
+        Review review = (Review) o;
+        return review.getId().equals(this.id) && review.getOffer().equals(this.offer) && review.getUser().equals(this.user);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + id.hashCode();
+        return result;
     }
 }

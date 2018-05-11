@@ -1,7 +1,9 @@
 package offersApp.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
+@Entity
 public class Sale {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -17,13 +19,20 @@ public class Sale {
 
     private int quantity;
 
-    public Sale(User customer, Offer offer, int quantity) {
+    private Date date;
+
+    private float sum;
+
+
+    public Sale() {
+    }
+
+    public Sale(User customer, Offer offer, int quantity, Date date, float sum) {
         this.customer = customer;
         this.offer = offer;
         this.quantity = quantity;
-    }
-
-    public Sale() {
+        this.date = date;
+        this.sum = sum;
     }
 
     public Long getId() {
@@ -56,5 +65,21 @@ public class Sale {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public float getSum() {
+        return sum;
+    }
+
+    public void setSum(float sum) {
+        this.sum = sum;
     }
 }

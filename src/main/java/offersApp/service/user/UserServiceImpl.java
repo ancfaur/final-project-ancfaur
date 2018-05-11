@@ -1,32 +1,43 @@
 package offersApp.service.user;
 import offersApp.converter.user.UserConverter;
 import offersApp.dto.UserDto;
+import offersApp.entity.Role;
 import offersApp.entity.User;
+import offersApp.repository.RoleRepository;
 import offersApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private RoleRepository roleRepository;
     private UserRepository userRepository;
     private UserConverter userConverter;
     private final BCryptPasswordEncoder encoder =  new BCryptPasswordEncoder();
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter){
+    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter, RoleRepository roleRepository){
         this.userRepository = userRepository;
         this.userConverter = userConverter;
+        this.roleRepository = roleRepository;
     }
 
+    private List<Role> findRoleByName(String roleName){
+        List<Role> roles = new ArrayList<>();
+        Role role = roleRepository.findByName(roleName);
+        roles.add(role);
+        return roles;
+    }
 
     @Override
     public void update(UserDto userDto) {
         userDto.setPassword(encoder.encode(userDto.getPassword()));
-        userRepository.save(userConverter.fromDto(userDto));
+        userRepository.save(userConverter.fromDto(userDto, findRoleByName(userDto.getRole())));
     }
 
     @Override
@@ -54,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto register(UserDto userDto) {
         userDto.setPassword(encoder.encode(userDto.getPassword()));
-        User user = userConverter.fromDto(userDto);
+        User user = userConverter.fromDto(userDto, findRoleByName(userDto.getRole()));
         User back = userRepository.save(user);
         userDto.setId(back.getId());
         return userDto;

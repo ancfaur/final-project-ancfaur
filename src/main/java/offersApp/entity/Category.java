@@ -13,8 +13,8 @@ public class Category {
 
     @ManyToMany
     @JoinTable(name = "customer_category",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private List<User> subscribers;
 
     public Category() {
@@ -24,6 +24,15 @@ public class Category {
         this.name = name;
         this.subscribers = subscribers;
     }
+
+
+    public Category(Long id, String name, List<User> subscribers) {
+        this.id = id;
+        this.name = name;
+        this.subscribers = subscribers;
+    }
+
+
 
     public Long getId() {
         return id;
@@ -49,11 +58,10 @@ public class Category {
         this.subscribers = subscribers;
     }
 
-    public void addSubscriber(User subscriber){
-        subscribers.add(subscriber);
+    public void addSubscriber(User subscriber){ subscribers.add(subscriber);
     }
 
     public void removeSubscriber(User subscriber){
-        subscribers.remove(subscriber);
+       subscribers.remove(subscriber);
     }
 }

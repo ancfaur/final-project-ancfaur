@@ -1,12 +1,16 @@
 package offersApp.entity;
 
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Offer {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
+
 
     // ads details
     private String name;
@@ -16,15 +20,23 @@ public class Offer {
     private String description;
     private byte[] image;
 
+    @ManyToMany
+    @JoinTable(name = "offer_category",
+            joinColumns = @JoinColumn(name = "offer_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+    private List<Category> categories;
+
+
     // administrative details
     private int inStock;
     private int initialNo;
+    private Date datePublished;
 
     @ManyToOne(optional = false)    // optinal=false =>agent is mandatory
     @JoinColumn(name="agent_id")
     private User agent;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="discount_id")
     private Discount discount;
 
@@ -95,6 +107,14 @@ public class Offer {
         this.inStock = inStock;
     }
 
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
     public int getInitialNo() {
         return initialNo;
     }
@@ -117,5 +137,13 @@ public class Offer {
 
     public void setDiscount(Discount discount) {
         this.discount = discount;
+    }
+
+    public Date getDatePublished() {
+        return datePublished;
+    }
+
+    public void setDatePublished(Date datePublished) {
+        this.datePublished = datePublished;
     }
 }

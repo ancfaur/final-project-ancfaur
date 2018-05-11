@@ -11,13 +11,16 @@ public class UserDto {
     @Pattern(regexp ="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message="The password should contain at least 8 characters, at least one digit, at least one uppercase letter, one at least one lowercase letter")
     private String password;
     private String role;
+    private String email;
+
     public UserDto(){}
 
-    public UserDto(Long id, String username, String password, String role ) {
+    public UserDto(Long id, String username, String password, String role, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.email = email;
     }
 
     public String getRole() {
@@ -50,5 +53,13 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

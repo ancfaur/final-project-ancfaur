@@ -1,5 +1,6 @@
 package offersApp.service.user;
 import offersApp.dto.UserDto;
+import offersApp.entity.Role;
 
 import java.util.List;
 
@@ -10,7 +11,6 @@ public interface UserService {
     List<UserDto> findAllWithRole(String roleName);
     UserDto register(UserDto userDto);
     Long findIdForUser(String username);
-
 
     // for testing purposes
     UserDto findById(Long id);

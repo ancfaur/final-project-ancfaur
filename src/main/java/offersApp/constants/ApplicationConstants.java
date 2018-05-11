@@ -4,8 +4,8 @@ public class ApplicationConstants {
     public static class Roles {
         public static final String ADMINISTRATOR = "administrator";
         public static final String AGENT = "agent";
-        public static final String USER= "user";
-        public static final String[] ROLES = new String[] {ADMINISTRATOR, AGENT, USER};
+        public static final String CUSTOMER= "customer";
+        public static final String[] ROLES = new String[] {ADMINISTRATOR, AGENT, CUSTOMER};
     }
 
     public static class Categories {
