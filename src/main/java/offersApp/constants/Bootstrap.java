@@ -5,7 +5,7 @@ import offersApp.dto.builder.OfferDtoBuilder;
 import offersApp.entity.*;
 import offersApp.repository.RoleRepository;
 import offersApp.service.category.CategoryService;
-import offersApp.service.offer.OfferService;
+import offersApp.service.offer.crud.OfferService;
 import offersApp.service.review.ReviewService;
 import offersApp.service.sale.LimittedStockException;
 import offersApp.service.sale.SaleService;
@@ -30,6 +30,7 @@ public class Bootstrap {
     private CategoryService categoryService;
     private SaleService saleService;
     private ReviewService reviewService;
+
 
     @Autowired
     public Bootstrap(RoleRepository roleRepository, UserService userService, OfferService offerService, CategoryService categoryService, SaleService saleService, ReviewService reviewService) {
@@ -138,8 +139,6 @@ public class Bootstrap {
     }
 
     private void addOffers() {
-        DiscountDto discountDto1 =  new DiscountDto(5, 20);
-
         List<String> categoryNames1 = new ArrayList<>();
         categoryNames1.add(ROMANTIC);
         categoryNames1.add(PHYSICAL);
@@ -150,17 +149,17 @@ public class Bootstrap {
                 .setInStock(20)
                 .setLocation("Padurea Baciu")
                 .setDescription("E fain sa calaresti cu noi")
-                .setAgent(new Long(2))
-                .setImage(null)
+                .setAgent(2L)
+                .setImage("/upload-dir/calut.jpg")
                 .setNoPersons(1)
                 .setDatePublished(new Date())
                 .setCategories(categoryNames1)
                 .setInitialNo(40)
+                .setMinQuantity(5)
+                .setPercentage(20)
                 .build();
-        offerService.create(offerDto1, discountDto1);
+        offerService.create(offerDto1);
 
-
-        DiscountDto discountDto2 =  new DiscountDto(2, 10);
 
         List<String> categoryNames2 = new ArrayList<>();
         categoryNames2.add(ROMANTIC);
@@ -172,14 +171,38 @@ public class Bootstrap {
                 .setInStock(10)
                 .setLocation("Chiar langa Turnul Eiffel")
                 .setDescription("Hotel 4 stele, 3 nopti, in weekend")
-                .setAgent(new Long(3))
-                .setImage(null)
+                .setAgent(3L)
+                .setImage("/upload-dir/cameraHotel.jpg")
                 .setNoPersons(2)
                 .setDatePublished(new Date())
                 .setCategories(categoryNames2)
                 .setInitialNo(10)
+                .setMinQuantity(2)
+                .setPercentage(10)
                 .build();
-        OfferDto back =offerService.create(offerDto2, discountDto2);
+        OfferDto back =offerService.create(offerDto2);
+
+
+        List<String> categoryNames3 = new ArrayList<>();
+        categoryNames3.add(CULINAR);
+        categoryNames3.add(CULTURAL);
+
+        OfferDto offerDto3 =new OfferDtoBuilder()
+                .setName("Targ de mancaruri traditionale")
+                .setPrice(56)
+                .setInStock(100)
+                .setLocation("Observator")
+                .setDescription("Ceva inedit")
+                .setAgent(3L)
+                .setImage("/upload-dir/papa.jpg")
+                .setNoPersons(2)
+                .setDatePublished(new Date())
+                .setCategories(categoryNames3)
+                .setInitialNo(100)
+                .setMinQuantity(5)
+                .setPercentage(10)
+                .build();
+        offerService.create(offerDto3);
 
         // test delete
         // offerService.delete(back.getId());
@@ -205,7 +228,7 @@ public class Bootstrap {
         // alowed with no discount
         SaleDto saleDto1 = new SaleDto(4L, 1L, 1, new Date());
         try {
-            System.out.print("*******Sale1 sum is ="+ saleService.sell(saleDto1) );
+            System.out.print("*******Sale1 sum is ="+ saleService.sellAndNotify(saleDto1) );
         } catch (LimittedStockException e) {
            System.out.print("*******Sale 1-> Should not occur");
         }
@@ -213,7 +236,7 @@ public class Bootstrap {
         // alowed with discount
         SaleDto saleDto2 = new SaleDto(4L, 1L, 5, new Date());
         try {
-            System.out.print("*******Sale2 sum is ="+ saleService.sell(saleDto2) );
+            System.out.print("*******Sale2 sum is ="+ saleService.sellAndNotify(saleDto2) );
         } catch (LimittedStockException e) {
             System.out.print("*******Sale 2-> Should not occur");
         }
@@ -221,7 +244,7 @@ public class Bootstrap {
         // not allowed
         SaleDto saleDto3 = new SaleDto(4L, 1L, 100, new Date());
         try {
-            saleService.sell(saleDto3);
+            saleService.sellAndNotify(saleDto3);
             System.out.print("*******Sale3 ");
         } catch (LimittedStockException e) {
             System.out.print("*******Sale 3-> Limited stock is okay");
@@ -230,13 +253,20 @@ public class Bootstrap {
     }
 
     private void addReviews(){
-        ReviewDto reviewDto1 = new ReviewDto(1L, 4L, new Date(), 4, "A fost chiar ok");
-        ReviewDto reviewDto2 = new ReviewDto(1L, 5L, new Date(), 5,"Genial!");
-        ReviewDto reviewDto3 = new ReviewDto(2L, 5L, new Date(), 1,"Penal! Mai bine mergeam la scoala");
+        ReviewDto reviewDto1 = new ReviewDto(1L, 4L, new Date(), 2, "A fost ok");
+        ReviewDto reviewDto2 = new ReviewDto(1L, 5L, new Date(), 1,"deloc Genial!");
+        ReviewDto reviewDto3 = new ReviewDto(1L, 5L, new Date(), 1,"Penal! Mai bine mergeam la scoala");
+        ReviewDto reviewDto4 = new ReviewDto(2L, 4L, new Date(), 4, "A fost chiar super");
+        ReviewDto reviewDto5 = new ReviewDto(2L, 5L, new Date(), 5,"Genial!");
+        ReviewDto reviewDto6 = new ReviewDto(3L, 5L, new Date(), 5,"minunat");
+
 
         ReviewDto back1 =reviewService.create(reviewDto1);
         ReviewDto back2 =reviewService.create(reviewDto2);
         reviewService.create(reviewDto3);
+        reviewService.create(reviewDto4);
+        reviewService.create(reviewDto5);
+        reviewService.create(reviewDto6);
 
 
 //        // test update

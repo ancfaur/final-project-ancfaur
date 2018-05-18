@@ -45,7 +45,7 @@ public class OfferBuilder {
         return this;
     }
 
-    public OfferBuilder setImage(byte[] image){
+    public OfferBuilder setImage(String image){
         offer.setImage(image);
         return this;
     }

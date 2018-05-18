@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form  th:action="@{'/agent/offer/update/' +${offerDto.id}}" enctype="multipart/form-data" th:object="${offerDto}" method="post">
+        <table>
+            <tr><td>
+                <input type="checkbox" name="categoryUpdated" value="cultural activities">cultural<br>
+                <input type="checkbox" name="categoryUpdated" value="educational activities">educational<br>
+                <input type="checkbox" name="categoryUpdated" value="musical activities">musical<br>
+                <input type="checkbox" name="categoryUpdated" value="physical activities">physical<br>
+                <input type="checkbox" name="categoryUpdated" value="nightlife and parties">nightlife and parties<br>
+                <input type="checkbox" name="categoryUpdated" value="accomodation">accomodation<br>
+                <input type="checkbox" name="categoryUpdated" value="culinar activities">culinar<br>
+                <input type="checkbox" name="categoryUpdated" value="family activities">family<br>
+                <input type="checkbox" name="categoryUpdated" value="group actitities">group<br>
+                <input type="checkbox" name="categoryUpdated" value="couple activities">couple<br>
+            </td></tr>
+
+            <tr><td>Id:<input th:readonly="true" type="text" th:field="*{id}" /></td></tr>
+            <tr><td>Name:<input type="text" th:field="*{name}" /></td></tr>
+            <tr><td>Price:<input type="text" th:field="*{price}" /></td></tr>
+            <tr><td>Number offers:<input type="text" th:field="*{initialNo}" /></td></tr>
+            <tr><td>Location:<input type="text" th:field="*{location}" /></td></tr>
+            <tr><td>Description:<textarea name="descriptionUpdated" ></textarea></td></tr>
+            <tr><td>Number of persons:<input type="text"  th:field="*{noPersons}"/></td></tr>
+            <tr><td>Min no for discount: <input type="text" th:field="*{minQuantity}" /></td></tr>
+            <tr><td>Discount per offer <input type="text" th:field="*{percentPerOffer}" /></td></tr>
+            <tr><td>Old image path <input th:readonly="true" type="text" th:field="*{image}" /></td></tr>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+
+
+            <tr><td></td><td> <p><input type="submit" name="updateBtn" value="Update offer" /></p></td></tr>
+        </table>
+    </form>
+</div>
+
+
+</body>
+</html>

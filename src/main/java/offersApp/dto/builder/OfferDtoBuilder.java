@@ -42,7 +42,7 @@ public class OfferDtoBuilder {
         return this;
     }
 
-    public OfferDtoBuilder setImage(byte[] image){
+    public OfferDtoBuilder setImage(String image){
         offerDto.setImage(image);
         return this;
     }
@@ -76,6 +76,17 @@ public class OfferDtoBuilder {
         offerDto.setCategories(categories);
         return this;
     }
+
+    public OfferDtoBuilder setMinQuantity(int minQuantity){
+        offerDto.setMinQuantity(minQuantity);
+        return this;
+    }
+
+    public OfferDtoBuilder setPercentage(int percentage){
+        offerDto.setPercentPerOffer(percentage);
+        return this;
+    }
+
 
     public OfferDto build(){
         return this.offerDto;

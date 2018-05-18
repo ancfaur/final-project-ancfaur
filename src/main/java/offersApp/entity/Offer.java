@@ -18,7 +18,7 @@ public class Offer {
     private int noPersons;
     private String location;
     private String description;
-    private byte[] image;
+    private String image;
 
     @ManyToMany
     @JoinTable(name = "offer_category",
@@ -91,11 +91,11 @@ public class Offer {
         this.description = description;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html   lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Agent Menu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Choose operation type</h1>
+<form action="#" th:action="@{/agent/offer/create}" method="post">
+    <p><input type="submit" name="createOfferBtn" value="Add new offer" /></p>
+
+</form>
+
+<form action="#" th:action="@{/agent/offer/showAll}" method="post">
+    <p><input type="submit" name="showOffersBtn" value="Show all offers" /></p>
+
+</form>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" name="logoutBtn" value="Log Out"/>
+</form>
+
+</body>
+</html>

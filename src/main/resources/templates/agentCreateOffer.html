@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+<div>
+    <form  action="#" th:action="@{/agent/offer/create}" enctype="multipart/form-data" th:object="${offerDto}" method="post">
+        <table>
+            <tr><td>
+                <input type="checkbox" name="category" value="cultural activities">cultural<br>
+                <input type="checkbox" name="category" value="educational activities">educational<br>
+                <input type="checkbox" name="category" value="musical activities">musical<br>
+                <input type="checkbox" name="category" value="physical activities">physical<br>
+                <input type="checkbox" name="category" value="nightlife and parties">nightlife and parties<br>
+                <input type="checkbox" name="category" value="accomodation">accomodation<br>
+                <input type="checkbox" name="category" value="culinar activities">culinar<br>
+                <input type="checkbox" name="category" value="family activities">family<br>
+                <input type="checkbox" name="category" value="group actitities">group<br>
+                <input type="checkbox" name="category" value="couple activities">couple<br>
+            </td></tr>
+
+            <tr><td>Name:<input type="text" th:field="*{name}" /></td></tr>
+            <tr><td>Price:<input type="text" th:field="*{price}" /></td></tr>
+            <tr><td>Number offers:<input type="text" th:field="*{initialNo}" /></td></tr>
+            <tr><td>Location:<input type="text" th:field="*{location}" /></td></tr>
+            <tr><td>Description:<textarea name="description" ></textarea></td></tr>
+            <tr><td>Number of persons:<input type="text"  th:field="*{noPersons}"/></td></tr>
+            <tr><td>Min no for discount: <input type="text" th:field="*{minQuantity}" /></td></tr>
+            <tr><td>Discount per offer <input type="text" th:field="*{percentPerOffer}" /></td></tr>
+
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+
+
+            <tr><td></td><td> <p><input type="submit" name="createBtn" value="Create offer" /></p></td></tr>
+        </table>
+    </form>
+</div>
+
+
+</body>
+</html>

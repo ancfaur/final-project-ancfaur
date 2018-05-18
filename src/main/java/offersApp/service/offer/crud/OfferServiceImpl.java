@@ -1,8 +1,6 @@
-package offersApp.service.offer;
+package offersApp.service.offer.crud;
 
-import offersApp.converter.offer.DiscountConverter;
 import offersApp.converter.offer.OfferConverter;
-import offersApp.dto.DiscountDto;
 import offersApp.dto.OfferDto;
 import offersApp.entity.Category;
 import offersApp.entity.Discount;
@@ -12,6 +10,7 @@ import offersApp.repository.CategoryRepository;
 import offersApp.repository.DiscountRepository;
 import offersApp.repository.OfferRepository;
 import offersApp.repository.UserRepository;
+import offersApp.service.offer.crud.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +21,14 @@ import java.util.List;
 public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
     private DiscountRepository discountRepository;
-    private DiscountConverter discountConverter;
     private OfferConverter offerConverter;
     private UserRepository userRepository;
     private CategoryRepository categoryRepository;
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, DiscountRepository discountRepository, DiscountConverter discountConverter, OfferConverter offerConverter, UserRepository userRepository, CategoryRepository categoryRepository) {
+    public OfferServiceImpl(OfferRepository offerRepository, DiscountRepository discountRepository,  OfferConverter offerConverter, UserRepository userRepository, CategoryRepository categoryRepository) {
         this.offerRepository = offerRepository;
         this.discountRepository = discountRepository;
-        this.discountConverter = discountConverter;
         this.offerConverter = offerConverter;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
@@ -39,9 +36,9 @@ public class OfferServiceImpl implements OfferService {
 
 
     @Override
-    public OfferDto create(OfferDto offerDto, DiscountDto discountDto) {
+    public OfferDto create(OfferDto offerDto) {
         User agent = userRepository.findById(offerDto.getAgentId()).orElse(null);
-        Discount discount = discountConverter.fromDto(discountDto);
+        Discount discount = new Discount(offerDto.getMinQuantity(), offerDto.getPercentPerOffer());
 
         List<Category> categories = new ArrayList<>();
 
@@ -62,14 +59,25 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void update(OfferDto offerDto, DiscountDto discountDto) {
-        delete(offerDto.getId());
-        create(offerDto, discountDto);
+    public void update(OfferDto offerDto) {
+        create(offerDto);
     }
 
     @Override
     public OfferDto findById(Long offerId) {
         return offerConverter.toDto(offerRepository.findById(offerId).orElse(null));
 
+    }
+
+    @Override
+    public List<OfferDto> findOffersForAgent(String username) {
+        User agent = userRepository.findByUsername(username);
+        List<Offer> offers = offerRepository.findByAgent(agent);
+        return offerConverter.toDto(offers);
+    }
+
+    @Override
+    public List<OfferDto> findAll() {
+       return offerConverter.toDto(offerRepository.findAll());
     }
 }

@@ -54,6 +54,12 @@ dependencies {
     // for validation
     compile("org.hibernate.validator:hibernate-validator")
 
+    // for email sending
+    compile("org.springframework.boot:spring-boot-starter-mail")
+
+    // for storage configuration
+    compile ("org.springframework.boot:spring-boot-configuration-processor")
+
 
     testCompile("junit:junit")
     testCompile('org.springframework.boot:spring-boot-starter-test')

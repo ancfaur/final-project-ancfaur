@@ -15,11 +15,26 @@ public class OfferDto {
     private int initialNo;
     private String location;
     private String description;
-    private byte[] image;
+    private  String image;
     private int noPersons;
     private Date datePublished;
+    private int minQuantity;
+    private int percentPerOffer;
 
-    public OfferDto() {
+    public int getMinQuantity() {
+        return minQuantity;
+    }
+
+    public void setMinQuantity(int minQuantity) {
+        this.minQuantity = minQuantity;
+    }
+
+    public int getPercentPerOffer() {
+        return percentPerOffer;
+    }
+
+    public void setPercentPerOffer(int percentPerOffer) {
+        this.percentPerOffer = percentPerOffer;
     }
 
     public Long getId() {
@@ -94,11 +109,11 @@ public class OfferDto {
         this.description = description;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

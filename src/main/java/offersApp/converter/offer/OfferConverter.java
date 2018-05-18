@@ -13,4 +13,5 @@ public interface OfferConverter {
     Offer fromDto(OfferDto offerDto, List<Category> categories, User agent, Discount discount);
     OfferDto toDto (Offer offer);
     List<OfferDto> toDto(List<Offer> offers);
+
 }

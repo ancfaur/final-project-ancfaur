@@ -17,10 +17,17 @@ public class ApplicationConstants {
         public static final String ACCOMODATION = "accomodation";
         public static final String CULINAR = "culinar activities";
         public static final String FAMILY = "family activities";
-        public static final String GROUP = "group actitity";
+        public static final String GROUP = "group actitities";
         public static final String ROMANTIC = "couple activities";
+        public static final String ALL = "ALL";
         public static final String[] CATEGORIES = new String[] {CULTURAL, EDUCATIONAL, MUSICAL, PHYSICAL, NIGHTLIFE, ACCOMODATION, CULINAR, FAMILY, GROUP, ROMANTIC};
     }
-
+    public static class Ordering {
+        public static final String PRICE = "price";
+        public static final String NO_STARS = "number stars";
+        public static final String PERCENT_DISCOUNT = "percentage discount";
+        public static final String DATE = "DATE";
+        public static final String[] ORDERINGS = new String[] {PRICE, NO_STARS, PERCENT_DISCOUNT};
+    }
 
 }

@@ -2,7 +2,7 @@ package offersApp.dto;
 
 public class CategoryDto {
     private Long id;
-private String name;
+    private String name;
 
     public CategoryDto() {
     }

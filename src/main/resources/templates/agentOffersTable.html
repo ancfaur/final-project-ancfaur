@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Offers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<form th:action="@{'/agent/offer/showAll'}" method="post">
+    <table border="2">
+        <thead>
+        <tr>
+            <th>Offer id</th>
+            <th>Name</th>
+            <th>Categories</th>
+            <th>Price</th>
+            <th>In stock</th>
+            <th>Initial no offers</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th>Min quant for discount</th>
+            <th>Discount percentage per offer</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="offerDto : ${offerDtos}">
+            <td th:text = "${offerDto.id}"></td>
+            <td th:text="${offerDto.name}"></td>
+            <td th:text="${offerDto.categories}"></td>
+            <td th:text="${offerDto.price}"></td>
+            <td th:text="${offerDto.inStock}"></td>
+            <td th:text="${offerDto.initialNo}"></td>
+            <td th:text="${offerDto.location}"></td>
+            <td th:text="${offerDto.description}"></td>
+            <td><img th:src="${offerDto.image}" style="width:304px; height:228px"/></td>>
+            <td th:text="${offerDto.minQuantity}"></td>
+            <td th:text="${offerDto.percentPerOffer}"></td>
+            <td>
+                <a th:href ="@{'update/' + ${offerDto.id}}">Edit offer</a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<a href="/agent/menu">Back to menu page</a>

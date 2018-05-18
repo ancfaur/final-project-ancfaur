@@ -19,6 +19,7 @@ public class OfferConverterImpl implements OfferConverter {
     @Override
     public Offer fromDto(OfferDto offerDto, List<Category> categories, User agent, Discount discount) {
         Offer offer = new OfferBuilder()
+                .setId(offerDto.getId())
                 .setName(offerDto.getName())
                 .setPrice(offerDto.getPrice())
                 .setInStock(offerDto.getInStock())
@@ -41,6 +42,7 @@ public class OfferConverterImpl implements OfferConverter {
         offer.getCategories().forEach(category-> categoriesName.add(category.getName()));
 
         OfferDto offerDto = new OfferDtoBuilder()
+                .setId(offer.getId())
                 .setName(offer.getName())
                 .setPrice(offer.getPrice())
                 .setInStock(offer.getInStock())
@@ -53,6 +55,8 @@ public class OfferConverterImpl implements OfferConverter {
                 .setDatePublished(offer.getDatePublished())
                 .setCategories(categoriesName)
                 .setInitialNo(offer.getInitialNo())
+                .setMinQuantity(offer.getDiscount().getMinQuantity())
+                .setPercentage(offer.getDiscount().getPercentDiscountPerOffer())
                 .build();
         return offerDto;
     }

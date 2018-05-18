@@ -12,6 +12,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import javax.sql.DataSource;
 
+import static offersApp.constants.ApplicationConstants.Roles.ADMINISTRATOR;
+import static offersApp.constants.ApplicationConstants.Roles.AGENT;
+import static offersApp.constants.ApplicationConstants.Roles.CUSTOMER;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -38,10 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMINISTRATOR")
-                .antMatchers("/agent/**").hasRole("AGENT")
-                .antMatchers("/user/**").hasRole("USER")
-                .anyRequest().authenticated()
+                .antMatchers("/admin/**").hasRole(ADMINISTRATOR)
+                .antMatchers("/agent/**").hasRole(AGENT)
+                .antMatchers("/user/**").hasRole(CUSTOMER)
+               // .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -54,9 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**");
+        web.ignoring().antMatchers("/resources/**");
     }
 
     private AuthenticationSuccessHandler successHandler() {
