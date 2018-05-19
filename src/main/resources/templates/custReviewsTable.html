@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Reviews</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<h3><span th:text="${reviewDtos.get(0).offerName}" ></span></h3>
+
+<br>
+<a th:href ="@{'/customer/offer/'+${reviewDtos.get(0).offerId}+'/addReview'}">Add a review</a>
+<br>
+<br>
+<form th:action=="@{'/customer/offer/'+${reviewDtos.get(0).offerId}+'/reviews'}" method="post">
+    <table border="2">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>No stars</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>More</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reviewDto : ${reviewDtos}">
+            <td th:text="${reviewDto.customerUsername}"></td>
+            <td th:text="${reviewDto.noStars}"></td>
+            <td th:text="${reviewDto.description}"></td>
+            <td th:text="${reviewDto.date}"></td>
+            <td>
+                <div th:if="${reviewDto.customerUsername.equals(nowLoggedIn)}">
+                    <div> <a th:href ="@{'/customer/offer/'+${reviewDto.offerId}+'/review/'+${reviewDto.id}+'/edit'}">Edit review</a> </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<a href="/customer/showOffers">Back to menu page</a>

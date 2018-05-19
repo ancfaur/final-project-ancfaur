@@ -24,7 +24,7 @@
     <table border="2">
         <thead>
         <tr>
-            <th>Offer id</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Categories</th>
             <th>Price</th>
@@ -35,8 +35,8 @@
             <th>Image</th>
             <th>Min quant for discount</th>
             <th>Discount percentage per offer</th>
-            <th>See reviews</th>
-            <th>Add review</th>
+            <th>Reviews</th>
+            <th>Convinced?</th>
         </tr>
         </thead>
         <tbody>
@@ -49,17 +49,16 @@
             <td th:text="${offerDto.initialNo}"></td>
             <td th:text="${offerDto.location}"></td>
             <td th:text="${offerDto.description}"></td>
-            <td><img th:src="${offerDto.image}" style="width:304px; height:228px"/></td>>
+            <td><img th:src="${offerDto.image}" style="width:304px; height:228px"/></td>
             <td th:text="${offerDto.minQuantity}"></td>
             <td th:text="${offerDto.percentPerOffer}"></td>
             <td>
-                <a th:href ="@{'reviews/' + ${offerDto.id}}">See reviews</a>
-
+                <a th:href ="@{'/customer/offer/'+${offerDto.id}+'/reviews'}">See reviews</a>
             </td>
             <td>
-                <a th:href ="@{'addReview/' + ${offerDto.id}}">Add review</a>
-
+                <a th:href ="@{'/customer/offer/'+${offerDto.id}+'/buy'}">Buy</a>
             </td>
+
         </tr>
         </tbody>
     </table>

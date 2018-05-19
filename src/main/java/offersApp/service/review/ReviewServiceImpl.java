@@ -11,6 +11,8 @@ import offersApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
     private OfferRepository offerRepository;
@@ -55,5 +57,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewDto findById(Long id) {
         return reviewConverter.toDto(reviewRepository.findById(id).orElse(null));
+    }
+
+    @Override
+    public List<ReviewDto> findReviewsForOffer(Long offerId) {
+        Offer offer = offerRepository.findById(offerId).orElse(null);
+        return reviewConverter.toDto(reviewRepository.findByOffer(offer));
     }
 }

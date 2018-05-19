@@ -13,6 +13,7 @@ import java.util.List;
 public class UserConverterImpl implements UserConverter {
     @Override
     public User fromDto(UserDto userDto, List<Role> roles) {
+        if(userDto==null) return null;
         User user = new UserBuilder()
                 .setId(userDto.getId())
                 .setUsername(userDto.getUsername())

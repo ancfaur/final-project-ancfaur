@@ -24,7 +24,8 @@ public class Review {
     public Review() {
     }
 
-    public Review(Offer offer, User user, Date date, int noStars, String description) {
+    public Review(Long id, Offer offer, User user, Date date, int noStars, String description) {
+        this.id = id;
         this.offer = offer;
         this.user = user;
         this.date = date;

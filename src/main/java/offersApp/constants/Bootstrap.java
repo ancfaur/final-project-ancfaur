@@ -5,7 +5,7 @@ import offersApp.dto.builder.OfferDtoBuilder;
 import offersApp.entity.*;
 import offersApp.repository.RoleRepository;
 import offersApp.service.category.CategoryService;
-import offersApp.service.offer.crud.OfferService;
+import offersApp.service.offer.basic.OfferService;
 import offersApp.service.review.ReviewService;
 import offersApp.service.sale.LimittedStockException;
 import offersApp.service.sale.SaleService;
@@ -30,6 +30,12 @@ public class Bootstrap {
     private CategoryService categoryService;
     private SaleService saleService;
     private ReviewService reviewService;
+
+    private final String OFFER1_NAME = "Caluti";
+    private final String OFFER2_NAME = "Weekend Paris";
+    private final String OFFER3_NAME = "Targ de mancaruri traditionale";
+    private final String CUSTOMER1_USERNAME = "customer1@yahoo.com";
+    private final String CUSTOMER2_USERNAME = "customer2@yahoo.com";
 
 
     @Autowired
@@ -103,7 +109,7 @@ public class Bootstrap {
 
     private void addCustomers(){
         UserDto customer1 = new UserDto();
-        customer1.setUsername("customer1@yahoo.com");
+        customer1.setUsername(CUSTOMER1_USERNAME);
         customer1.setPassword("Customer1#");
         customer1.setRole(CUSTOMER);
         customer1.setEmail("anc.faur@gmail.com");
@@ -119,7 +125,7 @@ public class Bootstrap {
 
 
         UserDto customer2 = new UserDto();
-        customer2.setUsername("customer2@yahoo.com");
+        customer2.setUsername(CUSTOMER2_USERNAME);
         customer2.setPassword("Customer1#");
         customer2.setRole(CUSTOMER);
         customer2.setEmail("anc.faur@gmail.com");
@@ -144,7 +150,7 @@ public class Bootstrap {
         categoryNames1.add(PHYSICAL);
 
         OfferDto offerDto1 =new OfferDtoBuilder()
-                .setName("Caluti")
+                .setName(OFFER1_NAME)
                 .setPrice(50)
                 .setInStock(20)
                 .setLocation("Padurea Baciu")
@@ -166,7 +172,7 @@ public class Bootstrap {
         categoryNames2.add(ACCOMODATION);
 
         OfferDto offerDto2 =new OfferDtoBuilder()
-                .setName("Weekend Paris")
+                .setName(OFFER2_NAME)
                 .setPrice(200)
                 .setInStock(10)
                 .setLocation("Chiar langa Turnul Eiffel")
@@ -188,7 +194,7 @@ public class Bootstrap {
         categoryNames3.add(CULTURAL);
 
         OfferDto offerDto3 =new OfferDtoBuilder()
-                .setName("Targ de mancaruri traditionale")
+                .setName(OFFER3_NAME)
                 .setPrice(56)
                 .setInStock(100)
                 .setLocation("Observator")
@@ -253,12 +259,12 @@ public class Bootstrap {
     }
 
     private void addReviews(){
-        ReviewDto reviewDto1 = new ReviewDto(1L, 4L, new Date(), 2, "A fost ok");
-        ReviewDto reviewDto2 = new ReviewDto(1L, 5L, new Date(), 1,"deloc Genial!");
-        ReviewDto reviewDto3 = new ReviewDto(1L, 5L, new Date(), 1,"Penal! Mai bine mergeam la scoala");
-        ReviewDto reviewDto4 = new ReviewDto(2L, 4L, new Date(), 4, "A fost chiar super");
-        ReviewDto reviewDto5 = new ReviewDto(2L, 5L, new Date(), 5,"Genial!");
-        ReviewDto reviewDto6 = new ReviewDto(3L, 5L, new Date(), 5,"minunat");
+        ReviewDto reviewDto1 = new ReviewDto(null, 1L, 4L, new Date(), 2, "A fost ok", CUSTOMER1_USERNAME, OFFER1_NAME);
+        ReviewDto reviewDto2 = new ReviewDto(null, 1L, 5L, new Date(), 1,"deloc Genial!", CUSTOMER2_USERNAME, OFFER1_NAME);
+        ReviewDto reviewDto3 = new ReviewDto(null, 1L, 5L, new Date(), 1,"Penal! Mai bine mergeam la scoala",CUSTOMER2_USERNAME, OFFER1_NAME);
+        ReviewDto reviewDto4 = new ReviewDto(null, 2L, 4L, new Date(), 4, "A fost chiar super",CUSTOMER1_USERNAME, OFFER2_NAME);
+        ReviewDto reviewDto5 = new ReviewDto(null, 2L, 5L, new Date(), 5,"Genial!", CUSTOMER2_USERNAME, OFFER2_NAME);
+        ReviewDto reviewDto6 = new ReviewDto(null, 3L, 5L, new Date(), 5,"minunat",CUSTOMER2_USERNAME, OFFER3_NAME);
 
 
         ReviewDto back1 =reviewService.create(reviewDto1);

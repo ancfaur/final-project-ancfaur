@@ -13,13 +13,15 @@ import java.util.List;
 public class ReviewConverterImpl implements ReviewConverter {
     @Override
     public Review fromDto(ReviewDto reviewDto, User customer, Offer offer) {
-        Review review = new Review(offer, customer, reviewDto.getDate(), reviewDto.getNoStars(), reviewDto.getDescription());
+        if (reviewDto==null) return null;
+        Review review = new Review(reviewDto.getId(), offer, customer, reviewDto.getDate(), reviewDto.getNoStars(), reviewDto.getDescription());
         return review;
     }
 
     @Override
     public ReviewDto toDto(Review review) {
-        ReviewDto reviewDto = new ReviewDto(review.getId(), review.getOffer().getId(), review.getUser().getId(), review.getDate(), review.getNoStars(), review.getDescription());
+        if (review==null) return null;
+        ReviewDto reviewDto = new ReviewDto(review.getId(), review.getOffer().getId(), review.getUser().getId(), review.getDate(), review.getNoStars(), review.getDescription(), review.getUser().getUsername(), review.getOffer().getName());
         return reviewDto;
     }
 

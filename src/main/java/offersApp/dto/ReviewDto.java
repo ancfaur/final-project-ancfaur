@@ -9,25 +9,21 @@ public class ReviewDto {
     private Date date;
     private int noStars;
     private String description;
+    private String customerUsername;
+    private String offerName;
 
     public ReviewDto() {
     }
 
-    public ReviewDto(Long offerId, Long userId, Date date, int noStars, String description) {
-        this.offerId = offerId;
-        this.userId = userId;
-        this.date = date;
-        this.noStars = noStars;
-        this.description = description;
-    }
-
-    public ReviewDto(Long id, Long offerId, Long userId, Date date, int noStars, String description) {
+    public ReviewDto(Long id, Long offerId, Long userId, Date date, int noStars, String description, String customerUsername, String offerName) {
         this.id = id;
         this.offerId = offerId;
         this.userId = userId;
         this.date = date;
         this.noStars = noStars;
         this.description = description;
+        this.customerUsername = customerUsername;
+        this.offerName = offerName;
     }
 
     public Long getId() {
@@ -76,5 +72,21 @@ public class ReviewDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCustomerUsername() {
+        return customerUsername;
+    }
+
+    public void setCustomerUsername(String customerUsername) {
+        this.customerUsername = customerUsername;
+    }
+
+    public String getOfferName() {
+        return offerName;
+    }
+
+    public void setOfferName(String offerName) {
+        this.offerName = offerName;
     }
 }

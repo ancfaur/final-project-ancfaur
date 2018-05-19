@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+
+
+
+<div>
+    <table>
+        <tr><td>Name:<input th:readonly="true" type="text" th:field="*{offerDto.name}" /></td></tr>
+        <tr><td>Price:<input th:readonly="true" type="text" th:field="*{offerDto.price}" /></td></tr>
+        <tr><td>Location:<input th:readonly="true" type="text" th:field="*{offerDto.location}" /></td></tr>
+        <tr><td>Offer Description:<input th:readonly="true" type="text" th:field="*{offerDto.description}"/></td></tr>
+        <tr><td>Number of persons:<input th:readonly="true" type="text"  th:field="*{offerDto.noPersons}"/></td></tr>
+        <tr><td>Min no for discount: <input th:readonly="true" type="text" th:field="*{offerDto.minQuantity}" /></td></tr>
+        <tr><td>Discount per offer <input th:readonly="true" type="text" th:field="*{offerDto.percentPerOffer}" /></td></tr>
+        <tr><td> <img th:src="${offerDto.image}" style="width:304px; height:228px"/> </td></tr>
+    </table>
+    <br>
+    <br>
+
+
+    <form  action="#" th:action="@{'/customer/offer/'+${offerDto.id}+'/addReview'}"  method="post">
+        <p> Please give your honest opinion and thank you for your time.</p>
+        <p> No stars: <input  type="text" th:field="*{reviewDto.noStars}"/> </p>
+        <p> Description: <input  type="text" th:field="*{reviewDto.description}"/> </p>
+        <p><input type="submit" name="sendBtn" value="Send review" /></p>
+    </form>
+</div>
+
+</body>
+</html>

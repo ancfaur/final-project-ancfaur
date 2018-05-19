@@ -14,6 +14,7 @@ public class SaleConverterImpl implements SaleConverter{
 
     @Override
     public SaleDto toDto(Sale sale) {
+        if (sale==null) return null;
         SaleDto saleDto = new SaleDto(sale.getId(), sale.getCustomer().getId(), sale.getOffer().getId(), sale.getQuantity(), sale.getDate());
         return saleDto;
 
@@ -21,6 +22,7 @@ public class SaleConverterImpl implements SaleConverter{
 
     @Override
     public Sale fromDto(SaleDto saleDto, User customer, Offer offer, float priceConsideringDiscount) {
+        if (saleDto==null) return null;
         Sale sale = new Sale(customer, offer, saleDto.getQuantity(), saleDto.getDate(), priceConsideringDiscount);
         return sale;
     }

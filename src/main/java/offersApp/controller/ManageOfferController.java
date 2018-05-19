@@ -2,7 +2,7 @@ package offersApp.controller;
 
 import offersApp.dto.OfferDto;
 import offersApp.service.imageStorage.StorageService;
-import offersApp.service.offer.crud.OfferService;
+import offersApp.service.offer.basic.OfferService;
 import offersApp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;

@@ -42,7 +42,7 @@ public class SaleServiceImpl implements SaleService {
         float sum = computeSumConsideringDiscount(withDiscount, saleDto.getQuantity(), offer.getPrice(), offer.getDiscount().getPercentDiscountPerOffer());
 
         Sale sale = saleConverter.fromDto(saleDto, customer, offer, sum);
-        Sale back =saleRepository.save(sale);
+        Sale back = saleRepository.save(sale);
 
         offer.setInStock(offer.getInStock() - saleDto.getQuantity());
         offerRepository.save(offer);
@@ -67,7 +67,7 @@ public class SaleServiceImpl implements SaleService {
 
     private float computeSumConsideringDiscount(boolean withDiscount, int quantity, float pricePerOffer, int percentage) {
         if (withDiscount) {
-            return pricePerOffer - (pricePerOffer * percentage / 100) * quantity;
+            return (pricePerOffer - (pricePerOffer * percentage / 100)) * quantity;
         }
         return pricePerOffer * quantity;
     }

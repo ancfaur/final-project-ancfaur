@@ -1,5 +1,6 @@
-package offersApp.service.offer.crud;
+package offersApp.service.offer.basic;
 import offersApp.dto.OfferDto;
+import offersApp.dto.ReviewDto;
 
 import java.util.List;
 

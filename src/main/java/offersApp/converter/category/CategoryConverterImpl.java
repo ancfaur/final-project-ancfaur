@@ -12,12 +12,14 @@ import java.util.List;
 public class CategoryConverterImpl implements CategoryConverter{
     @Override
     public Category fromDto(CategoryDto categoryDto, List<User> subscribers) {
+        if (categoryDto == null) return null;
         Category category = new Category(categoryDto.getId(), categoryDto.getName(), subscribers);
         return category;
     }
 
     @Override
     public CategoryDto toDto(Category category) {
+        if (category == null) return null;
         CategoryDto categoryDto = new CategoryDto(category.getId(), category.getName());
         return categoryDto;
     }

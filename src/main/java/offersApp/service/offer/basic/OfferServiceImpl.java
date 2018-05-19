@@ -1,4 +1,4 @@
-package offersApp.service.offer.crud;
+package offersApp.service.offer.basic;
 
 import offersApp.converter.offer.OfferConverter;
 import offersApp.dto.OfferDto;
@@ -10,7 +10,6 @@ import offersApp.repository.CategoryRepository;
 import offersApp.repository.DiscountRepository;
 import offersApp.repository.OfferRepository;
 import offersApp.repository.UserRepository;
-import offersApp.service.offer.crud.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

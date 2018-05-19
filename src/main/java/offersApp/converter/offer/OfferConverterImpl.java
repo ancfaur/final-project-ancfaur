@@ -18,6 +18,7 @@ public class OfferConverterImpl implements OfferConverter {
 
     @Override
     public Offer fromDto(OfferDto offerDto, List<Category> categories, User agent, Discount discount) {
+        if (offerDto == null) return null;
         Offer offer = new OfferBuilder()
                 .setId(offerDto.getId())
                 .setName(offerDto.getName())
@@ -38,6 +39,7 @@ public class OfferConverterImpl implements OfferConverter {
 
     @Override
     public OfferDto toDto(Offer offer) {
+        if(offer==null) return null;
         List<String> categoriesName = new ArrayList<>();
         offer.getCategories().forEach(category-> categoriesName.add(category.getName()));
 
