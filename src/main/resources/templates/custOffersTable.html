@@ -7,6 +7,14 @@
     <title>Offers</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" name="logoutBtn" value="Log Out"/>
+</form>
+
+<br>
+<a href="/customer/manageCategories">Manage my categories</a>
+<br>
+<br>
 
 <form th:action="@{'/customer/showOffers'}" method="post">
     Show from category:
@@ -19,7 +27,7 @@
     <p><input type="submit" name="searchBtn" value="Search" /></p>
 </form>
 
-
+<br>
 <form th:action="@{'/customer/showOffers'}" method="post">
     <table border="2">
         <thead>
@@ -63,4 +71,4 @@
         </tbody>
     </table>
 </form>
-<a href="/agent/menu">Back to menu page</a>
+

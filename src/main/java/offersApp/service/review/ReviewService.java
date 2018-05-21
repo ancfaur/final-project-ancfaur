@@ -6,7 +6,7 @@ import offersApp.entity.Offer;
 import java.util.List;
 
 public interface ReviewService {
-    ReviewDto create(ReviewDto reviewDto);
+    ReviewDto createAndNotify(ReviewDto reviewDto);
     void update(ReviewDto reviewDto);
     void delete(Long id);
     ReviewDto findById(Long id);

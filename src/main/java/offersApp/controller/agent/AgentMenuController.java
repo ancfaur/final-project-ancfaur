@@ -1,8 +1,8 @@
-package offersApp.controller;
+package offersApp.controller.agent;
 
 import offersApp.dto.OfferDto;
 import offersApp.service.imageStorage.StorageService;
-import offersApp.service.offer.basic.OfferService;
+import offersApp.service.offer.manage.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;

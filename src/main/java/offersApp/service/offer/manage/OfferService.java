@@ -1,11 +1,10 @@
-package offersApp.service.offer.basic;
+package offersApp.service.offer.manage;
 import offersApp.dto.OfferDto;
-import offersApp.dto.ReviewDto;
 
 import java.util.List;
 
 public interface OfferService {
-    OfferDto create(OfferDto offerDto);
+    OfferDto createAndNotify(OfferDto offerDto);
     void delete(Long offerId);
     void update(OfferDto offerDto);
     OfferDto findById(Long offerId);

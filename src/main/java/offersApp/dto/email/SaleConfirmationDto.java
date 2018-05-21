@@ -1,4 +1,4 @@
-package offersApp.dto;
+package offersApp.dto.email;
 
 public class SaleConfirmationDto {
     private String username;

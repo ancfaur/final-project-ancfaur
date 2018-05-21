@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Offers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<form th:action="@{'/admin/manageAgents'}" method="post">
+    <table border="2">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>email</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="userDto : ${userDtos}">
+            <td th:text = "${userDto.id}"></td>
+            <td th:text="${userDto.username}"></td>
+            <td th:text="${userDto.email}"></td>
+            <td>
+                <a th:href ="@{'/admin/agent/'+${userDto.id}+'/edit'}">Edit agent</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+
+<form  action="#" th:action="@{'/admin/manageAgents'}" th:object="${newAgent}" method="post">
+    <p> Username:<input  type="text" th:field="*{username}" /></p>
+    <p> Password:<input  type="text" th:field="*{password}" /></p>
+    <p> Email:<input  type="text" th:field="*{email}" /></p>
+    <p><input type="submit" name="createBtn" value="Create agent" /></p>
+</form>
+</body>
+
+<a href="/admin/menu">Back to menu page</a>
+</html>

@@ -5,7 +5,7 @@ import offersApp.dto.builder.OfferDtoBuilder;
 import offersApp.entity.*;
 import offersApp.repository.RoleRepository;
 import offersApp.service.category.CategoryService;
-import offersApp.service.offer.basic.OfferService;
+import offersApp.service.offer.manage.OfferService;
 import offersApp.service.review.ReviewService;
 import offersApp.service.sale.LimittedStockException;
 import offersApp.service.sale.SaleService;
@@ -56,7 +56,7 @@ public class Bootstrap {
         addAgents();
         addCustomers();
         addOffers();
-        addSales();
+        //addSales();
         addReviews();
 
         // test update category
@@ -76,7 +76,7 @@ public class Bootstrap {
 
     private void addCategories(){
      for(String categoryName: CATEGORIES){
-         CategoryDto categoryDto = new CategoryDto(categoryName);
+         CategoryDto categoryDto = new CategoryDto(categoryName, 0);
          categoryService.create(categoryDto);
      }
     }
@@ -119,6 +119,7 @@ public class Bootstrap {
         List<String> categoryNames1= new ArrayList<>();
         categoryNames1.add(CULINAR);
         categoryNames1.add(FAMILY);
+        categoryNames1.add(CULTURAL);
         for (String categoryName: categoryNames1){
             categoryService.subscribeUser(categoryName, back1.getId());
         }
@@ -164,7 +165,7 @@ public class Bootstrap {
                 .setMinQuantity(5)
                 .setPercentage(20)
                 .build();
-        offerService.create(offerDto1);
+        offerService.createAndNotify(offerDto1);
 
 
         List<String> categoryNames2 = new ArrayList<>();
@@ -186,7 +187,7 @@ public class Bootstrap {
                 .setMinQuantity(2)
                 .setPercentage(10)
                 .build();
-        OfferDto back =offerService.create(offerDto2);
+        OfferDto back =offerService.createAndNotify(offerDto2);
 
 
         List<String> categoryNames3 = new ArrayList<>();
@@ -208,7 +209,7 @@ public class Bootstrap {
                 .setMinQuantity(5)
                 .setPercentage(10)
                 .build();
-        offerService.create(offerDto3);
+        offerService.createAndNotify(offerDto3);
 
         // test delete
         // offerService.delete(back.getId());
@@ -225,7 +226,7 @@ public class Bootstrap {
     }
 
     private void updateCategoryAfterAll(){
-        CategoryDto categoryDto = new CategoryDto(10L, "romantic");
+        CategoryDto categoryDto = new CategoryDto(10L, "romantic", 0);
         categoryService.update(categoryDto);
     }
 
@@ -267,12 +268,12 @@ public class Bootstrap {
         ReviewDto reviewDto6 = new ReviewDto(null, 3L, 5L, new Date(), 5,"minunat",CUSTOMER2_USERNAME, OFFER3_NAME);
 
 
-        ReviewDto back1 =reviewService.create(reviewDto1);
-        ReviewDto back2 =reviewService.create(reviewDto2);
-        reviewService.create(reviewDto3);
-        reviewService.create(reviewDto4);
-        reviewService.create(reviewDto5);
-        reviewService.create(reviewDto6);
+        ReviewDto back1 =reviewService.createAndNotify(reviewDto1);
+        ReviewDto back2 =reviewService.createAndNotify(reviewDto2);
+        reviewService.createAndNotify(reviewDto3);
+        reviewService.createAndNotify(reviewDto4);
+        reviewService.createAndNotify(reviewDto5);
+        reviewService.createAndNotify(reviewDto6);
 
 
 //        // test update

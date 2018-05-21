@@ -6,8 +6,6 @@
 </div>
 
 
-
-
 <div>
     <table>
         <tr><td>Name:<input th:readonly="true" type="text" th:field="*{offerDto.name}" /></td></tr>
@@ -27,6 +25,9 @@
         <button name="buyBtn" onclick="return confirm ('Are you sure you want to place this order?')">Place order</button>
     </form>
 </div>
+
+<br>
+<a href="/customer/showOffers">Back to show offers page</a>
 
 </body>
 </html>

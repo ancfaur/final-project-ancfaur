@@ -9,11 +9,31 @@
 </head>
 <h3><span th:text="${reviewDtos.get(0).offerName}" ></span></h3>
 
+<a th:href ="@{'/customer/offer/'+${offerDto.id}+'/addReview'}">Add a review</a>
 <br>
-<a th:href ="@{'/customer/offer/'+${reviewDtos.get(0).offerId}+'/addReview'}">Add a review</a>
+<br>
+<a th:href ="@{'/customer/offer/'+${offerDto.id}+'/buy'}">Buy</a>
 <br>
 <br>
-<form th:action=="@{'/customer/offer/'+${reviewDtos.get(0).offerId}+'/reviews'}" method="post">
+<a href="/customer/showOffers">Back to show offers page</a>
+<br>
+<br>
+
+<table>
+    <tr><td>Name:<input th:readonly="true" type="text" th:field="*{offerDto.name}" /></td></tr>
+    <tr><td>Price:<input th:readonly="true" type="text" th:field="*{offerDto.price}" /></td></tr>
+    <tr><td>Description:<input th:readonly="true" type="text" th:field="*{offerDto.description}" /></td></tr>
+    <tr><td>Location:<input th:readonly="true" type="text" th:field="*{offerDto.location}" /></td></tr>
+    <tr><td>Number in stock:<input th:readonly="true" type="text" th:field="*{offerDto.inStock}" /></td></tr>
+    <tr><td>Initial number:<input th:readonly="true" type="text" th:field="*{offerDto.initialNo}" /></td></tr>
+    <tr><td>Number of persons:<input th:readonly="true" type="text"  th:field="*{offerDto.noPersons}"/></td></tr>
+    <tr><td>Min no for discount: <input th:readonly="true" type="text" th:field="*{offerDto.minQuantity}" /></td></tr>
+    <tr><td>Discount per offer <input th:readonly="true" type="text" th:field="*{offerDto.percentPerOffer}" /></td></tr>
+
+</table>
+
+
+<form th:action=="@{'/customer/offer/'+${offerDto.id}+'/reviews'}" method="post">
     <table border="2">
         <thead>
         <tr>
@@ -32,7 +52,7 @@
             <td th:text="${reviewDto.date}"></td>
             <td>
                 <div th:if="${reviewDto.customerUsername.equals(nowLoggedIn)}">
-                    <div> <a th:href ="@{'/customer/offer/'+${reviewDto.offerId}+'/review/'+${reviewDto.id}+'/edit'}">Edit review</a> </div>
+                    <div> <a th:href ="@{'/customer/offer/'+${offerDto.id}+'/review/'+${reviewDto.id}+'/edit'}">Edit review</a> </div>
                 </div>
             </td>
         </tr>
@@ -40,4 +60,3 @@
     </table>
 </form>
 
-<a href="/customer/showOffers">Back to menu page</a>

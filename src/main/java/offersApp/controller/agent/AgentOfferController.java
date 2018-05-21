@@ -1,8 +1,8 @@
-package offersApp.controller;
+package offersApp.controller.agent;
 
 import offersApp.dto.OfferDto;
 import offersApp.service.imageStorage.StorageService;
-import offersApp.service.offer.basic.OfferService;
+import offersApp.service.offer.manage.OfferService;
 import offersApp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -17,13 +17,13 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-public class ManageOfferController {
+public class AgentOfferController {
     private OfferService offerService;
     private StorageService storageService;
     private UserService userService;
 
     @Autowired
-    public ManageOfferController(OfferService offerService, StorageService storageService, UserService userService) {
+    public AgentOfferController(OfferService offerService, StorageService storageService, UserService userService) {
         this.offerService = offerService;
         this.storageService = storageService;
         this.userService = userService;
@@ -56,7 +56,7 @@ public class ManageOfferController {
         offerDto.setInStock(offerDto.getInitialNo());
 
         offerDto.setAgentId(userService.findIdForUser(principal.getName()));
-        offerService.create(offerDto);
+        offerService.createAndNotify(offerDto);
         redirectAttributes.addFlashAttribute("message", "You successfully created an offer"  + "!");
 
         return "redirect:/agent/offer/create";

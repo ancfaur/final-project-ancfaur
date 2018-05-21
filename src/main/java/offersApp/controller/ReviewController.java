@@ -1,12 +1,10 @@
 package offersApp.controller;
 
-import offersApp.dto.OfferDto;
 import offersApp.dto.ReviewDto;
-import offersApp.service.offer.basic.OfferService;
+import offersApp.service.offer.manage.OfferService;
 import offersApp.service.review.ReviewService;
 import offersApp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +28,7 @@ public class ReviewController {
 
     @GetMapping(value = "/customer/offer/{offerId}/reviews")
     public String indexReviewTable(Model model, Principal principal, @PathVariable(value = "offerId") Long offerId) {
+        model.addAttribute("offerDto", offerService.findById(offerId));
         List<ReviewDto> reviewDtos = reviewService.findReviewsForOffer(offerId);
         model.addAttribute("reviewDtos", reviewDtos);
         model.addAttribute("nowLoggedIn", principal.getName());
@@ -48,7 +47,7 @@ public class ReviewController {
         reviewDto.setOfferId(offerId);
         reviewDto.setUserId(userService.findIdForUser(principal.getName()));
         reviewDto.setDate(new Date());
-        reviewService.create(reviewDto);
+        reviewService.createAndNotify(reviewDto);
 
         redirectAttributes.addFlashAttribute("message", "Your review was sent. Thank you for your opinion!");
         return "redirect:/customer/offer/{offerId}/addReview";
@@ -58,11 +57,7 @@ public class ReviewController {
     @GetMapping(value = "/customer/offer/{offerId}/review/{reviewId}/edit")
     public String indexEditReview(Model model, Principal principal, @PathVariable(value = "offerId") Long offerId, @PathVariable(value = "reviewId") Long reviewId) {
         model.addAttribute("offerDto", offerService.findById(offerId));
-
-        ReviewDto reviewDto = reviewService.findById(reviewId);
-        if (reviewDto!=null) model.addAttribute("reviewDto", reviewDto);
-        else model.addAttribute("reviewDto", new ReviewDto()); // used when, after the review is deleted, the page is redirected here
-
+        model.addAttribute("reviewDto", reviewService.findById(reviewId));
         return "custEditDeleteReview";
     }
 
@@ -80,9 +75,16 @@ public class ReviewController {
 
 
     @PostMapping(value ="/customer/offer/{offerId}/review/{reviewId}/edit", params="deleteBtn")
-    public String editReview(Principal principal,  @PathVariable(value = "offerId") Long offerId, @PathVariable(value = "reviewId") Long reviewId, RedirectAttributes redirectAttributes) {
+    public String deleteReview(@PathVariable(value = "offerId") Long offerId, @PathVariable(value = "reviewId") Long reviewId) {
         reviewService.delete(reviewId);
-        redirectAttributes.addFlashAttribute("message", "Your review was deleted.");
-        return "redirect:/customer/offer/{offerId}/review/{reviewId}/edit";
+        return "redirect:/customer/offer/{offerId}/reviews";
+    }
+
+
+    @GetMapping(value = "/agent/offer/{offerId}/review/{reviewId}/view")
+    public String indexViewReview(Model model, Principal principal, @PathVariable(value = "offerId") Long offerId, @PathVariable(value = "reviewId") Long reviewId) {
+        model.addAttribute("offerDto", offerService.findById(offerId));
+        model.addAttribute("reviewDto", reviewService.findById(reviewId));
+        return "agentViewReview";
     }
 }

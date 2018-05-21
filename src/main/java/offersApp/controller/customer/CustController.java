@@ -1,8 +1,7 @@
-package offersApp.controller;
+package offersApp.controller.customer;
 
-import offersApp.dto.OfferDto;
 import offersApp.dto.SaleDto;
-import offersApp.service.offer.basic.OfferService;
+import offersApp.service.offer.manage.OfferService;
 import offersApp.service.offer.search.OfferSearchService;
 import offersApp.service.sale.LimittedStockException;
 import offersApp.service.sale.SaleService;
@@ -23,7 +22,7 @@ import static offersApp.constants.ApplicationConstants.Categories.CATEGORIES;
 import static offersApp.constants.ApplicationConstants.Ordering.ORDERINGS;
 
 @Controller
-public class CustomerController {
+public class CustController {
     @Autowired
     private OfferService offerService;
     @Autowired
@@ -79,8 +78,8 @@ public class CustomerController {
         saleDto.setCustomerId(userService.findIdForUser(principal.getName()));
         saleDto.setOfferId(offerId);
         try {
-            saleService.sellAndNotify(saleDto);
-            redirectAttributes.addFlashAttribute("message", "Your order has been placed. You will receive the ticket on your email address.");
+            float sum=saleService.sellAndNotify(saleDto);
+            redirectAttributes.addFlashAttribute("message", "Your order has been placed. You will receive the ticket on your email address. By the way, you have to pay "+sum);
         } catch (LimittedStockException e) {
             redirectAttributes.addFlashAttribute("message", "Unfortunately, there aren't as many offers now in stock. Better luck next time!");
         }

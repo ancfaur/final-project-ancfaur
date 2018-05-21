@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div>
+    <form  action="#" th:action="@{'/admin/category/'+${categoryDto.id}+'/edit'}"  method="post">
+        <p> Category id: <input th:readonly="true"  type="text" th:field="*{categoryDto.id}"/> </p>
+        <p> Name: <input  type="text" th:field="*{categoryDto.name}"/> </p>
+        <br>
+        <p><input type="submit" name="updateBtn" value="Update" /></p>
+        <p><input type="submit" name="deleteBtn" value="Delete" /></p>
+    </form>
+</div>
+
+
+<br>
+<a href="/admin/manageCategories">Back to manage categories page</a>
+
+</body>
+</html>

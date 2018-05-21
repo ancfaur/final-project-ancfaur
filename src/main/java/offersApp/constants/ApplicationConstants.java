@@ -30,4 +30,11 @@ public class ApplicationConstants {
         public static final String[] ORDERINGS = new String[] {PRICE, NO_STARS, PERCENT_DISCOUNT};
     }
 
+    public static class EmailTemplates{
+        public static final String SALE_CONFIRMATION = "sale confirmation template";
+        public static final String OFFER_NOTIFICATION = "offer notification template";
+        public static final String REVIEW_NOTIFICATION = "review notification template";
+        public static final String[] EMAIL_TEMPLATES = new String[] {SALE_CONFIRMATION, OFFER_NOTIFICATION, REVIEW_NOTIFICATION};
+
+    }
 }

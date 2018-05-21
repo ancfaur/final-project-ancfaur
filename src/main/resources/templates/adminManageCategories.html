@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Offers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<form th:action="@{'/admin/manageCategories'}" method="post">
+<table border="2">
+    <thead>
+    <tr>
+        <th>Category id</th>
+        <th>Name</th>
+        <th>No subscribers</th>
+        <th>Edit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="categoryDto : ${categoryDtos}">
+        <td th:text = "${categoryDto.id}"></td>
+        <td th:text="${categoryDto.name}"></td>
+        <td th:text="${categoryDto.noSubscribers}"></td>
+        <td>
+            <a th:href ="@{'/admin/category/'+${categoryDto.id}+'/edit'}">Edit category</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</form>
+
+<form  action="#" th:action="@{'/admin/manageCategories'}" th:object="${newCategory}" method="post">
+    <p> Name:<input  type="text" th:field="*{name}" /></p>
+    <p><input type="submit" name="createBtn" value="Create category" /></p>
+    </form>
+</body>
+
+<a href="/admin/menu">Back to menu page</a>
+</html>

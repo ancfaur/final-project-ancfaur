@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+
+
+<div>
+    <form  action="#" th:action="@{'/admin/agent/'+${userDto.id}+'/edit'}"  method="post">
+        <p> Agent id: <input th:readonly="true"  type="text" th:field="*{userDto.id}"/> </p>
+        <p> Username: <input  type="text" th:field="*{userDto.username}"/> </p>
+        <p> Password: <input  type="text" th:field="*{userDto.password}"/> </p>
+        <p> Email: <input  type="text" th:field="*{userDto.email}"/> </p>
+        <br>
+        <p><input type="submit" name="updateBtn" value="Update" /></p>
+        <p><input type="submit" name="deleteBtn" value="Delete" /></p>
+    </form>
+</div>
+
+
+<br>
+<a href="/admin/manageAgents">Back to manage agents page</a>
+
+</body>
+</html>

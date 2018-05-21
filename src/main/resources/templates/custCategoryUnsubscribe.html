@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:if="${message}">
+    <h2 th:text="${message}"/>
+</div>
+<form  action="#" th:action="@{'/customer/unsubscribe/'+${categoryDto.id}}"  method="post">
+    <p> By pressing the button below, you unsubscribe from the category</p>
+    <p  th:field="*{categoryDto.name}" .></p>
+    <p> As a result, you won't receive emails featuring offers of this category.</p>
+    <p><input type="submit" name="confirmBtn" value="Cancel subscription" /></p>
+</form>
+</body>
+
+<a href="/customer/manageCategories">Back to manage my categories</a>
+</html>

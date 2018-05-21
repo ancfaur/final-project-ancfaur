@@ -20,7 +20,7 @@ public class CategoryConverterImpl implements CategoryConverter{
     @Override
     public CategoryDto toDto(Category category) {
         if (category == null) return null;
-        CategoryDto categoryDto = new CategoryDto(category.getId(), category.getName());
+        CategoryDto categoryDto = new CategoryDto(category.getId(), category.getName(), category.getSubscribers().size());
         return categoryDto;
     }
 

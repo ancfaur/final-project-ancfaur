@@ -1,10 +1,12 @@
-package offersApp.constants;
+package offersApp.constants.mailTemplates;
 
-import offersApp.dto.SaleConfirmationDto;
+import offersApp.dto.email.SaleConfirmationDto;
+import offersApp.service.email.MailNotCustomizedException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 @Component
-public class ConfirmationSaleTemplate {
+public class ConfirmationSaleTemplateImpl implements EmailTemplate {
     public static final String HEADER = "Dear customer ";
     public static final String INTRODUCTION = "Thank you for your order. \n\nThe resume of your command is:\n ";
     public static final String ENDING = "Please present the sale id to the agent when requiring the service. Have a great experience.\n\n XOXO, \nbestOffers.com";
@@ -17,9 +19,11 @@ public class ConfirmationSaleTemplate {
     private int minQuantityForDiscount;
     private int percentagePerOffer;
 
-    public ConfirmationSaleTemplate() {}
+    public ConfirmationSaleTemplateImpl() {}
 
-    public void customizeMessage(SaleConfirmationDto saleConfirmationDto){
+    @Override
+    public void customizeMessage(Object o) {
+        SaleConfirmationDto saleConfirmationDto = (SaleConfirmationDto) o;
         this.username = saleConfirmationDto.getUsername();
         this.offerName = saleConfirmationDto.getOfferName();
         this.noOffers = saleConfirmationDto.getNoPurchased();
@@ -31,8 +35,8 @@ public class ConfirmationSaleTemplate {
     }
 
     private String getDiscountResume(){
-        if (withDiscount==true) return "As you have purchased more than "+ minQuantityForDiscount + " you have earn a discount of " + percentagePerOffer + " per offer.";
-        return "Quick reminder: If you buy at least  "+ minQuantityForDiscount + " offers of this kind, you earn a discount of " + percentagePerOffer + " per offer.";
+        if (withDiscount==true) return "As you have purchased more than "+ minQuantityForDiscount + " you have earn a discount of " + percentagePerOffer + " per offer.\n";
+        return "Quick reminder: If you buy at least  "+ minQuantityForDiscount + " offers of this kind, you earn a discount of " + percentagePerOffer + " per offer.\n";
     }
 
     private String getOfferResume(){
@@ -47,4 +51,5 @@ public class ConfirmationSaleTemplate {
         if (username == null) throw new MailNotCustomizedException();
         return HEADER + username+"," + "\n" + INTRODUCTION + getOfferResume() + getDiscountResume()+ "\n"  + ENDING;
     }
+
 }

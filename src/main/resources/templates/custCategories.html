@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories</title>
+</head>
+<body>
+
+<form  action="#" th:action="@{'/customer/manageCategories'}"  method="post">
+    <table border="2">
+        <thead>
+        <tr>
+            <th>CATEGORY</th>
+            <th>ACTION</th>
+        </tr>
+        </thead>
+        <tbody>
+
+    <tr th:each="categoryDto : ${categoryDtos}">
+        <td th:text = "${categoryDto.name}"></td>
+        <td>
+            <div th:if="${categoryDto.checked==true}">
+                <div> <a th:href ="@{'/customer/unsubscribe/'+${categoryDto.id}}">Unsubscribe</a> </div>
+            </div>
+            <div th:if="${categoryDto.checked==false}">
+                <div> <a th:href ="@{'/customer/subscribe/'+${categoryDto.id}}">Subscribe</a> </div>
+            </div>
+        </td>
+    </tr>
+        </tbody>
+    </table>
+</form>
+
+<br>
+<a href="/customer/showOffers">Back to show offers page</a>
+
+</body>
+</html>

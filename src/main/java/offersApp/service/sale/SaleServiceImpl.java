@@ -1,7 +1,7 @@
 package offersApp.service.sale;
 
 import offersApp.converter.sale.SaleConverter;
-import offersApp.dto.SaleConfirmationDto;
+import offersApp.dto.email.SaleConfirmationDto;
 import offersApp.dto.SaleDto;
 import offersApp.entity.Offer;
 import offersApp.entity.Sale;

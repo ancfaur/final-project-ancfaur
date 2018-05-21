@@ -1,16 +1,21 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html   lang="en"
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Menu</title>
+    <title>Administator Menu</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-
-<form action="#" th:action="@{/admin/menu}" method="post">
+<h1>Choose operation type</h1>
+<form action="#" name="adminMenu" th:action="@{/admin/menu}" method="post">
+    <p><input type="submit" name="agentManageBtn" value="Agent Management" /></p>
+    <p><input type="submit" name="categoryManageBtn" value="Category Management" /></p>
 </form>
 
+<form th:action="@{/logout}" method="post">
+    <input type="submit" name="logoutBtn" value="Log Out"/>
+</form>
 
 </body>
 </html>

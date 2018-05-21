@@ -32,8 +32,6 @@ public class Category {
         this.subscribers = subscribers;
     }
 
-
-
     public Long getId() {
         return id;
     }
@@ -63,5 +61,9 @@ public class Category {
 
     public void removeSubscriber(User subscriber){
        subscribers.remove(subscriber);
+    }
+
+    public boolean hasUserSubscribed(User user){
+        return subscribers.contains(user);
     }
 }
