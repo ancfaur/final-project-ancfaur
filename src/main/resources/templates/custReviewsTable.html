@@ -24,6 +24,7 @@
     <tr><td>Price:<input th:readonly="true" type="text" th:field="*{offerDto.price}" /></td></tr>
     <tr><td>Description:<input th:readonly="true" type="text" th:field="*{offerDto.description}" /></td></tr>
     <tr><td>Location:<input th:readonly="true" type="text" th:field="*{offerDto.location}" /></td></tr>
+    <tr><td><img th:src="${offerDto.image}" style="width:304px; height:228px"/></td></tr>
     <tr><td>Number in stock:<input th:readonly="true" type="text" th:field="*{offerDto.inStock}" /></td></tr>
     <tr><td>Initial number:<input th:readonly="true" type="text" th:field="*{offerDto.initialNo}" /></td></tr>
     <tr><td>Number of persons:<input th:readonly="true" type="text"  th:field="*{offerDto.noPersons}"/></td></tr>

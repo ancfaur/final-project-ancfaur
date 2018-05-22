@@ -31,10 +31,16 @@ public class ApplicationConstants {
     }
 
     public static class EmailTemplates{
-        public static final String SALE_CONFIRMATION = "sale confirmation template";
-        public static final String OFFER_NOTIFICATION = "offer notification template";
-        public static final String REVIEW_NOTIFICATION = "review notification template";
-        public static final String[] EMAIL_TEMPLATES = new String[] {SALE_CONFIRMATION, OFFER_NOTIFICATION, REVIEW_NOTIFICATION};
+        public static final String SALE_CONFIRMATION_TEMPLATE = "sale confirmation template";
+        public static final String OFFER_NOTIFICATION_TEMPLATE = "offer notification template";
+        public static final String REVIEW_NOTIFICATION_TEMPLATE = "review notification template";
+        public static final String[] EMAIL_TEMPLATES = new String[] { SALE_CONFIRMATION_TEMPLATE, OFFER_NOTIFICATION_TEMPLATE, REVIEW_NOTIFICATION_TEMPLATE};
+    }
 
+    public static class EmailSubjects{
+        public static final String REVIEW_NOTIFICATION_SUBJECT = "new review added";
+        public static String OFFER_NOTIFICATION_SUBJECT = "new offer added";
+        public static String SALE_CONFIRMATION_SUBJECT = "sale confirmation";
+        public static final String[] EMAIL_SUBJECTS = new String[] {REVIEW_NOTIFICATION_SUBJECT,OFFER_NOTIFICATION_SUBJECT,SALE_CONFIRMATION_SUBJECT};
     }
 }

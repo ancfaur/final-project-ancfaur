@@ -13,6 +13,9 @@ import offersApp.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static offersApp.constants.ApplicationConstants.EmailSubjects.SALE_CONFIRMATION_SUBJECT;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.SALE_CONFIRMATION_TEMPLATE;
+
 @Service
 public class SaleServiceImpl implements SaleService {
     private UserRepository userRepository;
@@ -54,7 +57,7 @@ public class SaleServiceImpl implements SaleService {
 
     private void notifyCustomer(String username, String email, String name, int quantity, boolean withDiscount, int minQuantity, int percentDiscountPerOffer, float sum, Long id) {
         SaleConfirmationDto saleConfirmationDto = new SaleConfirmationDto(username, email, name, quantity, withDiscount, minQuantity, percentDiscountPerOffer, sum, id);
-        emailService.sendSaleConfirmation(saleConfirmationDto);
+        emailService.configureAndSend(SALE_CONFIRMATION_SUBJECT, SALE_CONFIRMATION_TEMPLATE, saleConfirmationDto);
     }
 
     private void checkOfferInStock(int inStock, int quantity) throws LimittedStockException {

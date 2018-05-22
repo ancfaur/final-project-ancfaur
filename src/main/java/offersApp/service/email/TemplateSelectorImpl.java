@@ -7,10 +7,7 @@ import offersApp.constants.mailTemplates.NotifyReviewTemplateImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-import static offersApp.constants.ApplicationConstants.EmailTemplates.OFFER_NOTIFICATION;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.REVIEW_NOTIFICATION;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.SALE_CONFIRMATION;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.*;
 
 @Component
 public class TemplateSelectorImpl implements TemplateSelector{
@@ -27,9 +24,9 @@ public class TemplateSelectorImpl implements TemplateSelector{
 
     @Override
     public EmailTemplate selectTemplate(String template) {
-       if (template.equals(SALE_CONFIRMATION)) return confirmationSaleTemplate;
-       if (template.equals(REVIEW_NOTIFICATION)) return  notifyReviewTemplate;
-       if (template.equals(OFFER_NOTIFICATION)) return notifyOfferTemplate;
+       if (template.equals(SALE_CONFIRMATION_TEMPLATE)) return confirmationSaleTemplate;
+       if (template.equals(REVIEW_NOTIFICATION_TEMPLATE)) return  notifyReviewTemplate;
+       if (template.equals(OFFER_NOTIFICATION_TEMPLATE)) return notifyOfferTemplate;
        return null;
     }
 }

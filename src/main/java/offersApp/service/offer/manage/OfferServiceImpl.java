@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static offersApp.constants.ApplicationConstants.EmailSubjects.OFFER_NOTIFICATION_SUBJECT;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.OFFER_NOTIFICATION_TEMPLATE;
+
 @Service
 public class OfferServiceImpl implements OfferService {
     private OfferRepository offerRepository;
@@ -75,7 +78,7 @@ public class OfferServiceImpl implements OfferService {
 
         for (Map.Entry<User, List<String>> entry : userCategories.entrySet()) {
             OfferNotificationDto offerNotificationDto = new OfferNotificationDto(entry.getKey().getUsername(), entry.getKey().getEmail(), offer.getName(), entry.getValue(), getLinkOffer(offer.getId()), getLinkUnsubcribe());
-            emailService.sendOfferNotification(offerNotificationDto);
+            emailService.configureAndSend(OFFER_NOTIFICATION_SUBJECT, OFFER_NOTIFICATION_TEMPLATE, offerNotificationDto);
         }
     }
 

@@ -1,5 +1,6 @@
 package offersApp.constants.mailTemplates;
 
+import offersApp.dto.email.MailContentDto;
 import offersApp.dto.email.SaleConfirmationDto;
 import offersApp.service.email.MailNotCustomizedException;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ public class ConfirmationSaleTemplateImpl implements EmailTemplate {
     public ConfirmationSaleTemplateImpl() {}
 
     @Override
-    public void customizeMessage(Object o) {
+    public void customizeMessage(MailContentDto o) {
         SaleConfirmationDto saleConfirmationDto = (SaleConfirmationDto) o;
         this.username = saleConfirmationDto.getUsername();
         this.offerName = saleConfirmationDto.getOfferName();

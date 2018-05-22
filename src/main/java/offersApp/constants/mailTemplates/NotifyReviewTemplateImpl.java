@@ -1,5 +1,6 @@
 package offersApp.constants.mailTemplates;
 
+import offersApp.dto.email.MailContentDto;
 import offersApp.dto.email.ReviewNotificationDto;
 import offersApp.service.email.MailNotCustomizedException;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ public class NotifyReviewTemplateImpl implements EmailTemplate {
     public NotifyReviewTemplateImpl(){}
 
     @Override
-    public void customizeMessage(Object o) {
+    public void customizeMessage(MailContentDto o) {
         ReviewNotificationDto reviewNotificationDto = (ReviewNotificationDto) o;
         this.username = reviewNotificationDto.getUsername();
         this.link = reviewNotificationDto.getLink();

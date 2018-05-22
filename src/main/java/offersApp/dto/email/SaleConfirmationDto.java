@@ -1,8 +1,6 @@
 package offersApp.dto.email;
 
-public class SaleConfirmationDto {
-    private String username;
-    private String email;
+public class SaleConfirmationDto extends MailContentDto {
     private String offerName;
     private int noPurchased;
     private boolean withDiscount;
@@ -12,8 +10,7 @@ public class SaleConfirmationDto {
     private Long saleId;
 
     public SaleConfirmationDto(String username, String email, String offerName, int noPurchased, boolean withDiscount, int minQuantityForDiscount, int percentagePerOffer, float sum, Long saleId) {
-        this.username = username;
-        this.email = email;
+        super(username, email);
         this.offerName = offerName;
         this.noPurchased = noPurchased;
         this.withDiscount = withDiscount;
@@ -21,22 +18,6 @@ public class SaleConfirmationDto {
         this.percentagePerOffer = percentagePerOffer;
         this.sum = sum;
         this.saleId = saleId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getOfferName() {

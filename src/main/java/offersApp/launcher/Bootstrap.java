@@ -1,4 +1,4 @@
-package offersApp.constants;
+package offersApp.launcher;
 
 import offersApp.dto.*;
 import offersApp.dto.builder.OfferDtoBuilder;
@@ -56,7 +56,7 @@ public class Bootstrap {
         addAgents();
         addCustomers();
         addOffers();
-        //addSales();
+        addSales();
         addReviews();
 
         // test update category

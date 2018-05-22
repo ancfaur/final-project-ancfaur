@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static offersApp.constants.ApplicationConstants.EmailSubjects.REVIEW_NOTIFICATION_SUBJECT;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.REVIEW_NOTIFICATION_TEMPLATE;
+
 @Service
 public class ReviewServiceImpl implements ReviewService {
     private OfferRepository offerRepository;
@@ -49,7 +52,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     private void notifyAgent(Review review){
         ReviewNotificationDto reviewNotificationDto = new ReviewNotificationDto(review.getOffer().getAgent().getUsername(), review.getOffer().getAgent().getEmail(), getReviewNotificationLink(review));
-        emailService.sendReviewNotification(reviewNotificationDto);
+        emailService.configureAndSend(REVIEW_NOTIFICATION_SUBJECT, REVIEW_NOTIFICATION_TEMPLATE, reviewNotificationDto);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package offersApp.constants.mailTemplates;
 
+import offersApp.dto.email.MailContentDto;
 import offersApp.dto.email.OfferNotificationDto;
 import offersApp.service.email.MailNotCustomizedException;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class NotifyOfferTemplateImpl implements EmailTemplate {
     public NotifyOfferTemplateImpl(){}
 
     @Override
-    public void customizeMessage(Object o) {
+    public void customizeMessage(MailContentDto o) {
         OfferNotificationDto offerNotificationDto = (OfferNotificationDto) o;
         this.username = offerNotificationDto.getUsername();
         this.categoryNames = offerNotificationDto.getCategoryNames();
