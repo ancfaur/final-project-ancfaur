@@ -7,7 +7,7 @@
     <title>Reviews</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<h3><span th:text="${reviewDtos.get(0).offerName}" ></span></h3>
+<h3><span th:text="${offerDto.name}" ></span></h3>
 
 <a th:href ="@{'/customer/offer/'+${offerDto.id}+'/addReview'}">Add a review</a>
 <br>
@@ -24,7 +24,7 @@
     <tr><td>Price:<input th:readonly="true" type="text" th:field="*{offerDto.price}" /></td></tr>
     <tr><td>Description:<input th:readonly="true" type="text" th:field="*{offerDto.description}" /></td></tr>
     <tr><td>Location:<input th:readonly="true" type="text" th:field="*{offerDto.location}" /></td></tr>
-    <tr><td><img th:src="${offerDto.image}" style="width:304px; height:228px"/></td></tr>
+    <td><img th:src="@{'/upload-dir/' + ${offerDto.image}}" style="width:304px; height:228px"/></td>
     <tr><td>Number in stock:<input th:readonly="true" type="text" th:field="*{offerDto.inStock}" /></td></tr>
     <tr><td>Initial number:<input th:readonly="true" type="text" th:field="*{offerDto.initialNo}" /></td></tr>
     <tr><td>Number of persons:<input th:readonly="true" type="text"  th:field="*{offerDto.noPersons}"/></td></tr>
@@ -59,5 +59,6 @@
         </tr>
         </tbody>
     </table>
+    <a href="/customer/showOffers">Back to all offers</a>
 </form>
 

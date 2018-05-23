@@ -40,7 +40,7 @@ public class AgentMenuController {
     public String showAllOffers(Model model, Principal principal) {
         List<OfferDto> offerDtos =offerService.findOffersForAgent(principal.getName());
         model.addAttribute("offerDtos", offerDtos);
-
+        model.addAttribute("magic", storageService.loadAsResource(offerDtos.get(0).getImage()));
         for(OfferDto offerDto:offerDtos){
             System.out.println("++++++++++++++++"+offerDto.getImage());
         }

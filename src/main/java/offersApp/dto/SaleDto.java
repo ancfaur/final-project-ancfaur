@@ -1,11 +1,14 @@
 package offersApp.dto;
 
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 public class SaleDto {
     private Long id;
     private Long customerId;
     private Long offerId;
+
+    @Min(value = 1, message = "The quantity should be a strictly positive integer")
     private int quantity;
     private Date date;
 

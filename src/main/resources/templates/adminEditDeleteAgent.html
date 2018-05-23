@@ -1,17 +1,28 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<body>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Agent</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
 
+<body>
 <div th:if="${message}">
     <h2 th:text="${message}"/>
 </div>
 
 
 <div>
-    <form  action="#" th:action="@{'/admin/agent/'+${userDto.id}+'/edit'}"  method="post">
-        <p> Agent id: <input th:readonly="true"  type="text" th:field="*{userDto.id}"/> </p>
-        <p> Username: <input  type="text" th:field="*{userDto.username}"/> </p>
-        <p> Password: <input  type="text" th:field="*{userDto.password}"/> </p>
-        <p> Email: <input  type="text" th:field="*{userDto.email}"/> </p>
+    <form  action="#" th:action="@{'/admin/agent/'+${userDto.id}+'/edit'}" th:object="${userDto}" method="post">
+        <p> Agent id: <input th:readonly="true"  type="text" th:field="*{id}"/> </p>
+        <p> Username:<input  type="text" th:field="*{username}" /></p>
+        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>
+        <p> Password:<input  type="text" th:field="*{password}" /></p>
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>
+        <p> Email:<input  type="text" th:field="*{email}" /></p>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</p>
         <br>
         <p><input type="submit" name="updateBtn" value="Update" /></p>
         <p><input type="submit" name="deleteBtn" value="Delete" /></p>

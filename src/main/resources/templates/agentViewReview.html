@@ -11,7 +11,7 @@
             <tr><td>Number of persons:<input th:readonly="true" type="text"  th:field="*{offerDto.noPersons}"/></td></tr>
             <tr><td>Min no for discount: <input th:readonly="true" type="text" th:field="*{offerDto.minQuantity}" /></td></tr>
             <tr><td>Discount per offer <input th:readonly="true" type="text" th:field="*{offerDto.percentPerOffer}" /></td></tr>
-            <tr><td> <img th:src="${offerDto.image}" style="width:304px; height:228px"/> </td></tr>
+            <td><img th:src="@{'/upload-dir/' + ${offerDto.image}}" style="width:304px; height:228px"/></td>>
         </table>
         <br>
         <br>
@@ -22,5 +22,6 @@
     </form>
 </div>
 
+<a href="/agent/menu">Back to menu page</a>
 </body>
 </html>

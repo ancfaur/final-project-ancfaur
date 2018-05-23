@@ -10,9 +10,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 import static offersApp.constants.ApplicationConstants.Roles.CUSTOMER;
 
@@ -29,7 +32,11 @@ public class CustRegisterController {
     }
 
     @PostMapping(value="/register", params="registerBtn")
-    public String register(Model model, @ModelAttribute UserDto userDto) {
+    public String register(Model model, @ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("userDto", new UserDto());
+            return "registration";
+        }
         userDto.setRole(CUSTOMER);
         userService.register(userDto);
        return "redirect:/customer/manageCategories";

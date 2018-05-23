@@ -23,22 +23,27 @@
 
             <tr><td>Id:<input th:readonly="true" type="text" th:field="*{id}" /></td></tr>
             <tr><td>Name:<input type="text" th:field="*{name}" /></td></tr>
-            <tr><td>Price:<input type="text" th:field="*{price}" /></td></tr>
+            <tr><td>Price:<input type="text" th:field="*{price}" /></td>
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</p>
             <tr><td>Number offers:<input type="text" th:field="*{initialNo}" /></td></tr>
+            <p th:if="${#fields.hasErrors('initialNo')}" th:errors="*{initialNo}">InitialNo Error</p>
             <tr><td>Location:<input type="text" th:field="*{location}" /></td></tr>
-            <tr><td>Description:<textarea name="descriptionUpdated" ></textarea></td></tr>
+            <tr><td>Description:<input type="text" th:field="*{description}" /></td></tr>
             <tr><td>Number of persons:<input type="text"  th:field="*{noPersons}"/></td></tr>
+            <p th:if="${#fields.hasErrors('noPersons')}" th:errors="*{noPersons}">No persons Error</p>
             <tr><td>Min no for discount: <input type="text" th:field="*{minQuantity}" /></td></tr>
+            <p th:if="${#fields.hasErrors('minQuantity')}" th:errors="*{minQuantity}">Min quantity Error</p>
             <tr><td>Discount per offer <input type="text" th:field="*{percentPerOffer}" /></td></tr>
+            <p th:if="${#fields.hasErrors('percentPerOffer')}" th:errors="*{percentPerOffer}">Discount Error</p>
             <tr><td>Old image path <input th:readonly="true" type="text" th:field="*{image}" /></td></tr>
             <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
 
-
-            <tr><td></td><td> <p><input type="submit" name="updateBtn" value="Update offer" /></p></td></tr>
+            <tr><td> <p><input type="submit" name="updateBtn" value="Update offer" /></p></td></tr>
         </table>
     </form>
 </div>
 
+<a href="/agent/menu">Back to menu page</a>
 
 </body>
 </html>

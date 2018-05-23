@@ -1,5 +1,8 @@
 package offersApp.dto;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.Min;
 import java.util.Date;
 import java.util.List;
 
@@ -10,15 +13,25 @@ public class OfferDto {
 
     private List<String> categories;
     private String name;
+
+    @Min(value = 0, message = "The price should be a positive integer")
     private float price;
     private int inStock;
+
+    @Min(value = 1, message = "The initial quantity should be at least one")
     private int initialNo;
     private String location;
     private String description;
     private  String image;
+
+    @Min(value = 1, message = "The initial quantity should be at least one")
     private int noPersons;
     private Date datePublished;
+
+    @Min(value = 1, message = "The initial quantity should be at least one")
     private int minQuantity;
+
+    @Range(min=1, max=100, message="The percentage must be between 1 and 100")
     private int percentPerOffer;
 
     public int getMinQuantity() {

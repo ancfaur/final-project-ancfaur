@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,7 +75,12 @@ public class CustController {
     }
 
     @PostMapping(value = "/customer/offer/{offerId}/buy", params = "buyBtn")
-    public String buyOffer(@PathVariable(value = "offerId") Long offerId, @ModelAttribute SaleDto saleDto, Principal principal, RedirectAttributes redirectAttributes) {
+    public String buyOffer(@PathVariable(value = "offerId") Long offerId, @ModelAttribute @Valid SaleDto saleDto, BindingResult bindingResult, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("offerDto", offerService.findById(offerId));
+            model.addAttribute("saleDto", saleDto);
+            return "custBuy";
+        }
         saleDto.setDate(new Date());
         saleDto.setCustomerId(userService.findIdForUser(principal.getName()));
         saleDto.setOfferId(offerId);

@@ -5,9 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("storage")
 public class StorageProperties {
 
-    private String location = "src/main/webapp/upload-dir";
-    private String relativeLocation = "/upload-dir";
-
+    private String location = "upload-dir";
     public String getLocation() {
         return location;
     }
@@ -15,11 +13,4 @@ public class StorageProperties {
         this.location = location;
     }
 
-    public String getRelativeLocation() {
-        return relativeLocation;
-    }
-
-    public void setRelativeLocation(String relativeLocation) {
-        this.relativeLocation = relativeLocation;
-    }
 }

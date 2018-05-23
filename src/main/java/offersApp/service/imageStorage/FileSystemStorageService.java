@@ -22,12 +22,10 @@ import java.util.stream.Stream;
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
-    private final String relativeLocation;
 
     @Autowired
     public FileSystemStorageService(StorageProperties properties) {
         this.rootLocation = Paths.get(properties.getLocation());
-        this.relativeLocation =properties.getRelativeLocation();
     }
 
     @Override
@@ -51,31 +49,18 @@ public class FileSystemStorageService implements StorageService {
         catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
         }
-        return relativeLocation+ "/"+filename;
+        return filename;
     }
 
     @Override
-    public Stream<Path> loadAll() {
-        try {
-            return Files.walk(this.rootLocation, 1)
-                    .filter(path -> !path.equals(this.rootLocation))
-                    .map(this.rootLocation::relativize);
-        }
-        catch (IOException e) {
-            throw new StorageException("Failed to read stored files", e);
-        }
-
-    }
-
-    @Override
-    public Path load(String filename) {
+    public Path getAbsolutePath(String filename) {
         return rootLocation.resolve(filename);
     }
 
     @Override
     public Resource loadAsResource(String filename) {
         try {
-            Path file = load(filename);
+            Path file =  getAbsolutePath(filename);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;

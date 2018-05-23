@@ -20,8 +20,9 @@
     <br>
 
 
-    <form  action="#" th:action="@{'/customer/offer/'+${offerDto.id}+'/buy'}"  method="post">
-        <p> Quantity: <input  type="text" th:field="*{saleDto.quantity}"/> </p>
+    <form  action="#" th:action="@{'/customer/offer/'+${offerDto.id}+'/buy'}"  th:object="${saleDto}" method="post">
+        <p> Quantity: <input  type="text" th:field="*{quantity}"/> </p>
+        <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Quantity Error</p>
         <button name="buyBtn" onclick="return confirm ('Are you sure you want to place this order?')">Place order</button>
     </form>
 </div>

@@ -7,12 +7,14 @@ import offersApp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +45,15 @@ public class ReviewController {
     }
 
     @PostMapping(value = "/customer/offer/{offerId}/addReview", params = "sendBtn")
-    public String addReview(Principal principal, @PathVariable(value = "offerId") Long offerId, @ModelAttribute ReviewDto reviewDto, RedirectAttributes redirectAttributes) {
+    public String createReview(Principal principal, @PathVariable(value = "offerId") Long offerId,
+                            @ModelAttribute @Valid ReviewDto reviewDto, BindingResult bindingResult, Model model,
+                            RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("offerDto", offerService.findById(offerId));
+            model.addAttribute("reviewDto", reviewDto);
+            return "custAddReview";
+        }
+
         reviewDto.setOfferId(offerId);
         reviewDto.setUserId(userService.findIdForUser(principal.getName()));
         reviewDto.setDate(new Date());
@@ -62,7 +72,16 @@ public class ReviewController {
     }
 
     @PostMapping(value = "/customer/offer/{offerId}/review/{reviewId}/edit", params = "updateBtn")
-    public String editReview(Principal principal, @PathVariable(value = "offerId") Long offerId, @PathVariable(value = "reviewId") Long reviewId, @ModelAttribute ReviewDto reviewDto, RedirectAttributes redirectAttributes) {
+    public String editReview(Principal principal, @PathVariable(value = "offerId") Long offerId, @PathVariable(value = "reviewId") Long reviewId,
+                             @ModelAttribute @Valid ReviewDto reviewDto,BindingResult bindingResult, Model model,
+                             RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("offerDto", offerService.findById(offerId));
+            reviewDto.setId(reviewId);
+            model.addAttribute("reviewDto", reviewDto);
+            return "custEditDeleteReview";
+        }
+
         reviewDto.setId(reviewId);
         reviewDto.setOfferId(offerId);
         reviewDto.setUserId(userService.findIdForUser(principal.getName()));

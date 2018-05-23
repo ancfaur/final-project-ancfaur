@@ -1,5 +1,7 @@
 package offersApp.dto;
 
+import org.hibernate.validator.constraints.Range;
+
 import java.util.Date;
 
 public class ReviewDto {
@@ -7,7 +9,10 @@ public class ReviewDto {
     private Long offerId;
     private Long userId;
     private Date date;
+
+    @Range(min=1, max=5, message="The number of stars must be between 1 and 5")
     private int noStars;
+
     private String description;
     private String customerUsername;
     private String offerName;

@@ -57,7 +57,7 @@
             <td th:text="${offerDto.initialNo}"></td>
             <td th:text="${offerDto.location}"></td>
             <td th:text="${offerDto.description}"></td>
-            <td><img th:src="${offerDto.image}" style="width:304px; height:228px"/></td>
+            <td><img th:src="@{'/upload-dir/' + ${offerDto.image}}" style="width:304px; height:228px"/></td>>
             <td th:text="${offerDto.minQuantity}"></td>
             <td th:text="${offerDto.percentPerOffer}"></td>
             <td>
