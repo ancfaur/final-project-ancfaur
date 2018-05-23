@@ -1,10 +1,6 @@
-package offersApp.service.offer.search;
+package offersApp.service.offer.search.order;
 
-import offersApp.converter.offer.OfferConverter;
-import offersApp.dto.OfferDto;
 import offersApp.entity.Offer;
-import offersApp.service.offer.search.Ordering;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package offersApp.service.offer.search;
+package offersApp.service.offer.search.order;
 import offersApp.entity.Offer;
 import offersApp.entity.Review;
 import offersApp.repository.ReviewRepository;
@@ -26,7 +26,7 @@ public class OrderByStarsNo implements Ordering {
             for(Review review:reviews){
                 avg += review.getNoStars();
             }
-            avg = avg / reviews.size();
+            if (reviews.size()!=0) avg = avg / reviews.size();
             sorted.put(new Float(5-avg), offer);
         }
         Collection collection = sorted.values();

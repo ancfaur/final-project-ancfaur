@@ -15,17 +15,7 @@
 <a href="/customer/manageCategories">Manage my categories</a>
 <br>
 <br>
-
-<form th:action="@{'/customer/showOffers'}" method="post">
-    Show from category:
-    <select name="selCategory">
-    <option th:each="category : ${categories}" th:text="${category}"></option> </select>
-
-    Order by:
-    <select name="selOrdering">
-        <option th:each="ordering : ${orderings}" th:text="${ordering}"></option> </select>
-    <p><input type="submit" name="searchBtn" value="Search" /></p>
-</form>
+<a href="/customer/crazySearch">Make a crazy search</a>
 
 <br>
 <form th:action="@{'/customer/showOffers'}" method="post">

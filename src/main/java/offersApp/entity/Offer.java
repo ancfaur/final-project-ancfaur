@@ -10,8 +10,6 @@ public class Offer {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-
-
     // ads details
     private String name;
     private float price;
@@ -145,5 +143,16 @@ public class Offer {
 
     public void setDatePublished(Date datePublished) {
         this.datePublished = datePublished;
+    }
+
+    public boolean belongsToCategory(Category category){
+        return categories.contains(category);
+    }
+
+    public boolean belongsToCategory(String categoryName){
+        for(Category category:categories){
+            if (category.getName().equals(categoryName)) return true;
+        }
+        return false;
     }
 }

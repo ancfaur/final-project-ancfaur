@@ -66,4 +66,23 @@ public class Category {
     public boolean hasUserSubscribed(User user){
         return subscribers.contains(user);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Category)) {
+            return false;
+        }
+        Category category = (Category) o;
+        return category.getName().equals(this.name) && category.getId().equals(this.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + id.hashCode();
+        return result;
+    }
+
 }

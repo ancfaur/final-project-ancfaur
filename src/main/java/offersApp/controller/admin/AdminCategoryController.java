@@ -1,7 +1,6 @@
 package offersApp.controller.admin;
 
 import offersApp.dto.CategoryDto;
-import offersApp.dto.OfferDto;
 import offersApp.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

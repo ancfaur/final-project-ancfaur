@@ -1,6 +1,7 @@
 package offersApp.controller.customer;
 
 import offersApp.dto.SaleDto;
+import offersApp.dto.SearchDto;
 import offersApp.service.offer.manage.OfferService;
 import offersApp.service.offer.search.OfferSearchService;
 import offersApp.service.sale.LimittedStockException;
@@ -37,33 +38,39 @@ public class CustController {
     @GetMapping(value = "/customer/showOffers")
     @Order(value = 1)
     public String indexOffers(Model model) {
-        refillOptions(model);
         model.addAttribute("offerDtos", offerService.findAll());
         return "custOffersTable";
     }
 
-    @PostMapping(value = "/customer/showOffers", params = "searchBtn")
-    public String searchOffers(@RequestParam String selCategory, @RequestParam String selOrdering, Model model) {
-        model.addAttribute("offerDtos", offerSearchService.searchBy(selCategory, selOrdering));
-        refillOptions(model);
-        return "custOffersTable";
+    @GetMapping(value = "/customer/crazySearch")
+    @Order(value = 1)
+    public String indexSearch(Model model) {
+        List<String> orderings = new ArrayList<>();
+        orderings.add("DATE");
+        for (String ordering : ORDERINGS) {
+            orderings.add(ordering);
+        }
+        model.addAttribute("orderings", orderings);
+        model.addAttribute("offerDtos", offerService.findAll());
+        model.addAttribute("searchDto", new SearchDto());
+        return "custCrazySearch";
     }
 
-    private void refillOptions(Model model) {
-        List<String> categories = new ArrayList<>();
-        categories.add("ALL");
-        for (String category : CATEGORIES) {
-            categories.add(category);
-        }
+    @PostMapping(value = "/customer/crazySearch", params = "searchBtn")
+    public String searchOffers(@RequestParam("category") List<String> categories,@ModelAttribute SearchDto searchDto, @RequestParam String selOrdering, Model model) {
+        searchDto.setOrdering(selOrdering);
+        searchDto.setCategories(categories);
+        model.addAttribute("offerDtos", offerSearchService.searchBy(searchDto));
+        model.addAttribute("message", offerSearchService.searchDescription(searchDto));
 
         List<String> orderings = new ArrayList<>();
         orderings.add("DATE");
         for (String ordering : ORDERINGS) {
             orderings.add(ordering);
         }
-
-        model.addAttribute("categories", categories);
         model.addAttribute("orderings", orderings);
+        model.addAttribute("searchDto", searchDto);
+        return "custCrazySearch";
     }
 
     @GetMapping(value = "/customer/offer/{offerId}/buy")

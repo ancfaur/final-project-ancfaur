@@ -12,7 +12,4 @@ import java.util.List;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
     List<Offer> findByAgent(User agent);
-
-    @Query("select o from Offer AS o WHERE :category MEMBER OF o.categories")
-    List<Offer> findByCategory(@Param("category")Category category);
 }

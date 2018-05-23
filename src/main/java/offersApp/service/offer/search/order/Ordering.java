@@ -1,4 +1,4 @@
-package offersApp.service.offer.search;
+package offersApp.service.offer.search.order;
 import offersApp.dto.OfferDto;
 import offersApp.entity.Offer;
 import java.util.List;

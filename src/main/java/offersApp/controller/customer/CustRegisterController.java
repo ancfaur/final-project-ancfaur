@@ -1,13 +1,9 @@
 package offersApp.controller.customer;
 
-import offersApp.dto.OfferDto;
 import offersApp.dto.UserDto;
-import offersApp.service.category.CategoryService;
 import offersApp.service.user.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

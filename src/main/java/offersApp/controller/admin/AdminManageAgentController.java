@@ -1,6 +1,4 @@
 package offersApp.controller.admin;
-import offersApp.dto.CategoryDto;
-import offersApp.dto.ReviewDto;
 import offersApp.dto.UserDto;
 import offersApp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
