@@ -2,21 +2,16 @@ package offersApp.service.review;
 
 import offersApp.converter.offer.ReviewConverter;
 import offersApp.dto.ReviewDto;
-import offersApp.dto.email.ReviewNotificationDto;
 import offersApp.entity.Offer;
 import offersApp.entity.Review;
 import offersApp.entity.User;
 import offersApp.repository.OfferRepository;
 import offersApp.repository.ReviewRepository;
 import offersApp.repository.UserRepository;
-import offersApp.service.email.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static offersApp.constants.ApplicationConstants.EmailSubjects.REVIEW_NOTIFICATION_SUBJECT;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.REVIEW_NOTIFICATION_TEMPLATE;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -24,36 +19,26 @@ public class ReviewServiceImpl implements ReviewService {
     private UserRepository userRepository;
     private ReviewRepository reviewRepository;
     private ReviewConverter reviewConverter;
-    private EmailService emailService;
+
 
     @Autowired
-    public ReviewServiceImpl(OfferRepository offerRepository, UserRepository userRepository, ReviewRepository reviewRepository, ReviewConverter reviewConverter, EmailService emailService) {
+    public ReviewServiceImpl(OfferRepository offerRepository, UserRepository userRepository, ReviewRepository reviewRepository, ReviewConverter reviewConverter) {
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
         this.reviewRepository = reviewRepository;
         this.reviewConverter = reviewConverter;
-        this.emailService = emailService;
     }
 
     @Override
-    public ReviewDto createAndNotify(ReviewDto reviewDto) {
+    public ReviewDto create(ReviewDto reviewDto) {
        Offer offer = offerRepository.findById(reviewDto.getOfferId()).orElse(null);
        User customer = userRepository.findById(reviewDto.getUserId()).orElse(null);
        Review review = reviewConverter.fromDto(reviewDto, customer, offer);
        Review back = reviewRepository.save(review);
        reviewDto.setId(back.getId());
-       notifyAgent(review);
        return reviewDto;
     }
 
-    private String getReviewNotificationLink(Review review){
-        return "http://localhost:8080/agent/offer/"+ review.getOffer().getId()+"/review/"+review.getId()+"/view";
-    }
-
-    private void notifyAgent(Review review){
-        ReviewNotificationDto reviewNotificationDto = new ReviewNotificationDto(review.getOffer().getAgent().getUsername(), review.getOffer().getAgent().getEmail(), getReviewNotificationLink(review));
-        emailService.configureAndSend(REVIEW_NOTIFICATION_SUBJECT, REVIEW_NOTIFICATION_TEMPLATE, reviewNotificationDto);
-    }
 
     @Override
     public void update(ReviewDto reviewDto) {
@@ -79,5 +64,10 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDto> findReviewsForOffer(Long offerId) {
         Offer offer = offerRepository.findById(offerId).orElse(null);
         return reviewConverter.toDto(reviewRepository.findByOffer(offer));
+    }
+
+    @Override
+    public void deleteAll() {
+        reviewRepository.deleteAll();
     }
 }

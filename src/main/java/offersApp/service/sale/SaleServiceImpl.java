@@ -9,12 +9,10 @@ import offersApp.entity.User;
 import offersApp.repository.OfferRepository;
 import offersApp.repository.SaleRepository;
 import offersApp.repository.UserRepository;
-import offersApp.service.email.EmailService;
+import offersApp.service.email.EmailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static offersApp.constants.ApplicationConstants.EmailSubjects.SALE_CONFIRMATION_SUBJECT;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.SALE_CONFIRMATION_TEMPLATE;
 
 @Service
 public class SaleServiceImpl implements SaleService {
@@ -22,10 +20,10 @@ public class SaleServiceImpl implements SaleService {
     private OfferRepository offerRepository;
     private SaleRepository saleRepository;
     private SaleConverter saleConverter;
-    private EmailService emailService;
+    private EmailSender emailService;
 
     @Autowired
-    public SaleServiceImpl(UserRepository userRepository, OfferRepository offerRepository, SaleRepository saleRepository, SaleConverter saleConverter, EmailService emailService) {
+    public SaleServiceImpl(UserRepository userRepository, OfferRepository offerRepository, SaleRepository saleRepository, SaleConverter saleConverter, EmailSender emailService) {
         this.userRepository = userRepository;
         this.offerRepository = offerRepository;
         this.saleRepository = saleRepository;
@@ -33,7 +31,7 @@ public class SaleServiceImpl implements SaleService {
         this.emailService = emailService;
     }
 
-    public float sellAndNotify(SaleDto saleDto) throws LimittedStockException {
+    public SaleDto sell(SaleDto saleDto) throws LimittedStockException {
         Offer offer = offerRepository.findById(saleDto.getOfferId()).orElse(null);
         checkOfferInStock(offer.getInStock(), saleDto.getQuantity());
         User customer = userRepository.findById(saleDto.getCustomerId()).orElse(null);
@@ -45,19 +43,13 @@ public class SaleServiceImpl implements SaleService {
         float sum = computeSumConsideringDiscount(withDiscount, saleDto.getQuantity(), offer.getPrice(), offer.getDiscount().getPercentDiscountPerOffer());
 
         Sale sale = saleConverter.fromDto(saleDto, customer, offer, sum);
-        Sale back = saleRepository.save(sale);
+        saleRepository.save(sale);
 
         offer.setInStock(offer.getInStock() - saleDto.getQuantity());
         offerRepository.save(offer);
-
-        notifyCustomer(customer.getUsername(), customer.getEmail(), offer.getName(), saleDto.getQuantity(), withDiscount, offer.getDiscount().getMinQuantity(),
-                offer.getDiscount().getPercentDiscountPerOffer(), sum, back.getId());
-        return sum;
-    }
-
-    private void notifyCustomer(String username, String email, String name, int quantity, boolean withDiscount, int minQuantity, int percentDiscountPerOffer, float sum, Long id) {
-        SaleConfirmationDto saleConfirmationDto = new SaleConfirmationDto(username, email, name, quantity, withDiscount, minQuantity, percentDiscountPerOffer, sum, id);
-        emailService.configureAndSend(SALE_CONFIRMATION_SUBJECT, SALE_CONFIRMATION_TEMPLATE, saleConfirmationDto);
+        saleDto.setSumToPay(sum);
+        saleDto.setWithDiscount(withDiscount);
+        return saleDto;
     }
 
     private void checkOfferInStock(int inStock, int quantity) throws LimittedStockException {

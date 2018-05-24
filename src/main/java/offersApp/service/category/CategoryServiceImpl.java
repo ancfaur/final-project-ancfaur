@@ -49,6 +49,11 @@ public class CategoryServiceImpl implements  CategoryService{
     }
 
     @Override
+    public void deleteAll() {
+        categoryRepository.deleteAll();
+    }
+
+    @Override
     public CategoryDto create(CategoryDto categoryDto) {
         Category category = categoryConverter.fromDto(categoryDto, new ArrayList<>());
         Category back = categoryRepository.save(category);

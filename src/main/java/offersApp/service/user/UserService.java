@@ -14,6 +14,6 @@ public interface UserService {
 
     // for testing purposes
     UserDto findById(Long id);
-    void removeAll();
+    void deleteAll();
     boolean checkPasswords(String rawPass, String encodedPass);
 }

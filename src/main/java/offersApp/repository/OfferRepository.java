@@ -12,4 +12,5 @@ import java.util.List;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
     List<Offer> findByAgent(User agent);
+    void deleteByAgent(User agent);
 }

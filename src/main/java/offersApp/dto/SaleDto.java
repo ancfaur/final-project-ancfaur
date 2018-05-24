@@ -11,6 +11,8 @@ public class SaleDto {
     @Min(value = 1, message = "The quantity should be a strictly positive integer")
     private int quantity;
     private Date date;
+    private float sumToPay;
+    private boolean withDiscount;
 
     public SaleDto() {
     }
@@ -68,5 +70,21 @@ public class SaleDto {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public float getSumToPay() {
+        return sumToPay;
+    }
+
+    public void setSumToPay(float sumToPay) {
+        this.sumToPay = sumToPay;
+    }
+
+    public boolean isWithDiscount() {
+        return withDiscount;
+    }
+
+    public void setWithDiscount(boolean withDiscount) {
+        this.withDiscount = withDiscount;
     }
 }

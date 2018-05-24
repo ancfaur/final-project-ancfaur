@@ -1,6 +1,7 @@
 package offersApp.controller.agent;
 
 import offersApp.dto.OfferDto;
+import offersApp.service.email.EmailService;
 import offersApp.service.imageStorage.StorageService;
 import offersApp.service.offer.manage.OfferService;
 import offersApp.service.user.UserService;
@@ -18,17 +19,27 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import static offersApp.constants.ApplicationConstants.EmailTemplates.OFFER_NOTIFICATION_TYPE;
+
 @Controller
 public class AgentOfferController {
     private OfferService offerService;
     private StorageService storageService;
     private UserService userService;
+    private EmailService emailService;
 
     @Autowired
-    public AgentOfferController(OfferService offerService, StorageService storageService, UserService userService) {
+    public AgentOfferController(OfferService offerService, StorageService storageService, UserService userService, EmailService emailService) {
         this.offerService = offerService;
         this.storageService = storageService;
         this.userService = userService;
+        this.emailService = emailService;
+    }
+    @GetMapping(value="/agent/offer/showAll")
+    public String showAllOffers(Model model, Principal principal) {
+        List<OfferDto> offerDtos =offerService.findOffersForAgent(principal.getName());
+        model.addAttribute("offerDtos", offerDtos);
+        return "agentOffersTable";
     }
 
     @GetMapping(value="/agent/offer/create")
@@ -61,7 +72,9 @@ public class AgentOfferController {
         offerDto.setInStock(offerDto.getInitialNo());
 
         offerDto.setAgentId(userService.findIdForUser(principal.getName()));
-        offerService.createAndNotify(offerDto);
+        OfferDto offerDtoBack = offerService.create(offerDto);
+        emailService.sendEmail(OFFER_NOTIFICATION_TYPE, offerDtoBack);
+
         redirectAttributes.addFlashAttribute("message", "You successfully created an offer"  + "!");
 
         return "redirect:/agent/offer/create";
@@ -71,7 +84,7 @@ public class AgentOfferController {
     @GetMapping(value="/agent/offer/update/{offerId}")
     public String updateOffer(Model model, @PathVariable(value = "offerId") Long offerId) {
         model.addAttribute("offerDto", offerService.findById(offerId));
-        return "agentUpdateOffer";
+        return "agentEditDeleteOffer";
     }
 
 
@@ -85,7 +98,7 @@ public class AgentOfferController {
                               RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("offerDto", offerDto);
-            return "agentUpdateOffer";
+            return "agentEditDeleteOffer";
         }
 
         // store image
@@ -104,5 +117,9 @@ public class AgentOfferController {
         return "redirect:/agent/offer/update/{offerId}";
     }
 
-
+    @PostMapping(value="/agent/offer/update/{offerId}", params = "deleteBtn")
+    public String deleteOffer(@PathVariable(value = "offerId") Long offerId) {
+        offerService.delete(offerId);
+        return "redirect:/agent/offer/showAll";
+    }
 }

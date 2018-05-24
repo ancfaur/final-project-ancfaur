@@ -18,4 +18,5 @@ public interface CategoryService{
     CategoryDto findByName(String name);
     List<CategoryDto> findAll();
     List<CategoryDto> findCategoriesForUser(Long userId);
+    void deleteAll();
 }

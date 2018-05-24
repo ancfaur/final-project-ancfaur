@@ -9,16 +9,16 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /*
 @SpringBootApplication
 */
 @EntityScan(basePackages ={"offersApp.entity"})
-@SpringBootApplication(scanBasePackages = {"offersApp.launcher", "offersApp.entity", "offersApp.dto", "offersApp.repository", "offersApp.service", "offersApp.controller", "offersApp.converter", "offersApp.config", "offersApp.constants"})
+@SpringBootApplication(scanBasePackages = {"offersApp.launcher","offersApp.bootstrap", "offersApp.entity", "offersApp.dto", "offersApp.repository", "offersApp.service", "offersApp.controller", "offersApp.converter", "offersApp.config", "offersApp.constants"})
 @EnableJpaRepositories(basePackages = {"offersApp.repository"})
 @EnableConfigurationProperties({StorageProperties.class})
-
-
+@EnableTransactionManagement
 public class Launcher  {
     public static void main(String[] args) {
         SpringApplication.run(Launcher.class, args);

@@ -12,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 import java.util.List;
 
+@RequestMapping(value="/agent/menu")
 @Controller
 public class AgentMenuController {
     @Autowired
@@ -25,27 +27,20 @@ public class AgentMenuController {
     @Autowired
     private StorageService storageService;
 
-    @GetMapping(value="/agent/menu")
+    @GetMapping()
     @Order(value = 1)
     public String index() {
         return "agentMenu";
     }
 
-    @PostMapping(value="/agent/offer/create", params = "createOfferBtn")
+    @PostMapping(params = "createOfferBtn")
     public String createOffer() {
         return "redirect:/agent/offer/create";
     }
 
-    @PostMapping(value="/agent/offer/showAll",params = "showOffersBtn")
-    public String showAllOffers(Model model, Principal principal) {
-        List<OfferDto> offerDtos =offerService.findOffersForAgent(principal.getName());
-        model.addAttribute("offerDtos", offerDtos);
-        model.addAttribute("magic", storageService.loadAsResource(offerDtos.get(0).getImage()));
-        for(OfferDto offerDto:offerDtos){
-            System.out.println("++++++++++++++++"+offerDto.getImage());
-        }
-
-        return "agentOffersTable";
+    @PostMapping(params = "showOffersBtn")
+    public String showAllOffers() {
+        return "redirect:/agent/offer/showAll";
     }
 
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 @Component
 public class ConfirmationSaleTemplateImpl implements EmailTemplate {
     public static final String HEADER = "Dear customer ";
-    public static final String INTRODUCTION = "Thank you for your order. \n\nThe resume of your command is:\n ";
+    public static final String INTRODUCTION = "Thank you for your order. \n\nThe resume of your command is:\n";
     public static final String ENDING = "Please present the sale id to the agent when requiring the service. Have a great experience.\n\n XOXO, \nbestOffers.com";
     public String username;
     public String offerName;

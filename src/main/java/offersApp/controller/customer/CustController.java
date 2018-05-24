@@ -2,6 +2,7 @@ package offersApp.controller.customer;
 
 import offersApp.dto.SaleDto;
 import offersApp.dto.SearchDto;
+import offersApp.service.email.EmailService;
 import offersApp.service.offer.manage.OfferService;
 import offersApp.service.offer.search.OfferSearchService;
 import offersApp.service.sale.LimittedStockException;
@@ -16,24 +17,32 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static offersApp.constants.ApplicationConstants.Categories.CATEGORIES;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.SALE_CONFIRMATION_TYPE;
 import static offersApp.constants.ApplicationConstants.Ordering.ORDERINGS;
 
 @Controller
 public class CustController {
-    @Autowired
     private OfferService offerService;
-    @Autowired
     private OfferSearchService offerSearchService;
-    @Autowired
     private SaleService saleService;
-    @Autowired
     private UserService userService;
+    private EmailService emailService;
+
+    @Autowired
+    public CustController(OfferService offerService, OfferSearchService offerSearchService, SaleService saleService, UserService userService, EmailService emailService) {
+        this.offerService = offerService;
+        this.offerSearchService = offerSearchService;
+        this.saleService = saleService;
+        this.userService = userService;
+        this.emailService = emailService;
+    }
 
     @GetMapping(value = "/customer/showOffers")
     @Order(value = 1)
@@ -92,8 +101,9 @@ public class CustController {
         saleDto.setCustomerId(userService.findIdForUser(principal.getName()));
         saleDto.setOfferId(offerId);
         try {
-            float sum=saleService.sellAndNotify(saleDto);
-            redirectAttributes.addFlashAttribute("message", "Your order has been placed. You will receive the ticket on your email address. By the way, you have to pay "+sum);
+            SaleDto backSaleDto =saleService.sell(saleDto);
+            emailService.sendEmail(SALE_CONFIRMATION_TYPE, backSaleDto);
+            redirectAttributes.addFlashAttribute("message", "Your order has been placed. You will receive the ticket on your email address. By the way, you have to pay "+backSaleDto.getSumToPay());
         } catch (LimittedStockException e) {
             redirectAttributes.addFlashAttribute("message", "Unfortunately, there aren't as many offers now in stock. Better luck next time!");
         }

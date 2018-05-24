@@ -8,14 +8,12 @@
 </head>
 <body>
 <h1>Choose operation type</h1>
-<form action="#" th:action="@{/agent/offer/create}" method="post">
+<form action="#" th:action="@{/agent/menu}" method="post">
     <p><input type="submit" name="createOfferBtn" value="Add new offer" /></p>
-
 </form>
 
-<form action="#" th:action="@{/agent/offer/showAll}" method="post">
+<form action="#" th:action="@{/agent/menu}" method="post">
     <p><input type="submit" name="showOffersBtn" value="Show all offers" /></p>
-
 </form>
 
 <form th:action="@{/logout}" method="post">

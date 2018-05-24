@@ -1,6 +1,7 @@
 package offersApp.controller;
 
 import offersApp.dto.ReviewDto;
+import offersApp.service.email.EmailService;
 import offersApp.service.offer.manage.OfferService;
 import offersApp.service.review.ReviewService;
 import offersApp.service.user.UserService;
@@ -19,14 +20,22 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
+import static offersApp.constants.ApplicationConstants.EmailTemplates.REVIEW_NOTIFICATION_TYPE;
+
 @Controller
 public class ReviewController {
-    @Autowired
     private ReviewService reviewService;
-    @Autowired
     private OfferService offerService;
-    @Autowired
     private UserService userService;
+    private EmailService emailService;
+
+    @Autowired
+    public ReviewController(ReviewService reviewService, OfferService offerService, UserService userService, EmailService emailService) {
+        this.reviewService = reviewService;
+        this.offerService = offerService;
+        this.userService = userService;
+        this.emailService = emailService;
+    }
 
     @GetMapping(value = "/customer/offer/{offerId}/reviews")
     public String indexReviewTable(Model model, Principal principal, @PathVariable(value = "offerId") Long offerId) {
@@ -57,7 +66,9 @@ public class ReviewController {
         reviewDto.setOfferId(offerId);
         reviewDto.setUserId(userService.findIdForUser(principal.getName()));
         reviewDto.setDate(new Date());
-        reviewService.createAndNotify(reviewDto);
+        ReviewDto backReviewDto =reviewService.create(reviewDto);
+        emailService.sendEmail(REVIEW_NOTIFICATION_TYPE, backReviewDto);
+
 
         redirectAttributes.addFlashAttribute("message", "Your review was sent. Thank you for your opinion!");
         return "redirect:/customer/offer/{offerId}/addReview";

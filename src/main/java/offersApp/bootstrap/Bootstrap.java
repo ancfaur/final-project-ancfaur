@@ -1,10 +1,11 @@
-package offersApp.launcher;
+package offersApp.bootstrap;
 
 import offersApp.dto.*;
 import offersApp.dto.builder.OfferDtoBuilder;
 import offersApp.entity.*;
 import offersApp.repository.RoleRepository;
 import offersApp.service.category.CategoryService;
+import offersApp.service.email.EmailService;
 import offersApp.service.offer.manage.OfferService;
 import offersApp.service.review.ReviewService;
 import offersApp.service.sale.LimittedStockException;
@@ -20,6 +21,9 @@ import java.util.Date;
 import java.util.List;
 
 import static offersApp.constants.ApplicationConstants.Categories.*;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.OFFER_NOTIFICATION_TYPE;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.REVIEW_NOTIFICATION_TYPE;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.SALE_CONFIRMATION_TYPE;
 import static offersApp.constants.ApplicationConstants.Roles.*;
 
 @Component
@@ -30,6 +34,7 @@ public class Bootstrap {
     private CategoryService categoryService;
     private SaleService saleService;
     private ReviewService reviewService;
+    private EmailService emailService;
 
     private final String OFFER1_NAME = "Caluti";
     private final String OFFER2_NAME = "Weekend Paris";
@@ -39,13 +44,14 @@ public class Bootstrap {
 
 
     @Autowired
-    public Bootstrap(RoleRepository roleRepository, UserService userService, OfferService offerService, CategoryService categoryService, SaleService saleService, ReviewService reviewService) {
+    public Bootstrap(RoleRepository roleRepository, UserService userService, OfferService offerService, CategoryService categoryService, SaleService saleService, ReviewService reviewService, EmailService emailService) {
         this.roleRepository = roleRepository;
         this.userService = userService;
         this.offerService = offerService;
         this.categoryService = categoryService;
         this.saleService = saleService;
         this.reviewService = reviewService;
+        this.emailService = emailService;
     }
 
     @PostConstruct
@@ -55,14 +61,21 @@ public class Bootstrap {
         addAdmin();
         addAgents();
         addCustomers();
+
         addOffers();
         addSales();
         addReviews();
+
+        addOfferAndNotify();
+        addReviewAndNotify();
+        addSaleAndNotify();
+
 
         // test update category
         // updateCategoryAfterAll();
 
     }
+
 
     private void addRoles(){
         Role adminRole = new Role(ADMINISTRATOR);
@@ -118,6 +131,7 @@ public class Bootstrap {
 
         List<String> categoryNames1= new ArrayList<>();
         categoryNames1.add(CULINAR);
+        categoryNames1.add(GROUP);
         categoryNames1.add(FAMILY);
         categoryNames1.add(CULTURAL);
         for (String categoryName: categoryNames1){
@@ -165,7 +179,7 @@ public class Bootstrap {
                 .setMinQuantity(5)
                 .setPercentage(20)
                 .build();
-        offerService.createAndNotify(offerDto1);
+        offerService.create(offerDto1);
 
 
         List<String> categoryNames2 = new ArrayList<>();
@@ -187,7 +201,7 @@ public class Bootstrap {
                 .setMinQuantity(2)
                 .setPercentage(10)
                 .build();
-        OfferDto back =offerService.createAndNotify(offerDto2);
+        OfferDto back =offerService.create(offerDto2);
 
 
         List<String> categoryNames3 = new ArrayList<>();
@@ -209,7 +223,7 @@ public class Bootstrap {
                 .setMinQuantity(5)
                 .setPercentage(10)
                 .build();
-        offerService.createAndNotify(offerDto3);
+        offerService.create(offerDto3);
 
         // test delete
         // offerService.delete(back.getId());
@@ -235,7 +249,7 @@ public class Bootstrap {
         // alowed with no discount
         SaleDto saleDto1 = new SaleDto(4L, 1L, 1, new Date());
         try {
-            System.out.print("*******Sale1 sum is ="+ saleService.sellAndNotify(saleDto1) );
+            System.out.print("*******Sale1 sum is ="+ saleService.sell(saleDto1) );
         } catch (LimittedStockException e) {
            System.out.print("*******Sale 1-> Should not occur");
         }
@@ -243,7 +257,7 @@ public class Bootstrap {
         // alowed with discount
         SaleDto saleDto2 = new SaleDto(4L, 1L, 5, new Date());
         try {
-            System.out.print("*******Sale2 sum is ="+ saleService.sellAndNotify(saleDto2) );
+            System.out.print("*******Sale2 sum is ="+ saleService.sell(saleDto2) );
         } catch (LimittedStockException e) {
             System.out.print("*******Sale 2-> Should not occur");
         }
@@ -251,7 +265,7 @@ public class Bootstrap {
         // not allowed
         SaleDto saleDto3 = new SaleDto(4L, 1L, 100, new Date());
         try {
-            saleService.sellAndNotify(saleDto3);
+            saleService.sell(saleDto3);
             System.out.print("*******Sale3 ");
         } catch (LimittedStockException e) {
             System.out.print("*******Sale 3-> Limited stock is okay");
@@ -268,12 +282,12 @@ public class Bootstrap {
         ReviewDto reviewDto6 = new ReviewDto(null, 3L, 5L, new Date(), 5,"minunat",CUSTOMER2_USERNAME, OFFER3_NAME);
 
 
-        ReviewDto back1 =reviewService.createAndNotify(reviewDto1);
-        ReviewDto back2 =reviewService.createAndNotify(reviewDto2);
-        reviewService.createAndNotify(reviewDto3);
-        reviewService.createAndNotify(reviewDto4);
-        reviewService.createAndNotify(reviewDto5);
-        reviewService.createAndNotify(reviewDto6);
+        ReviewDto back1 =reviewService.create(reviewDto1);
+        ReviewDto back2 =reviewService.create(reviewDto2);
+        reviewService.create(reviewDto3);
+        reviewService.create(reviewDto4);
+        reviewService.create(reviewDto5);
+        reviewService.create(reviewDto6);
 
 
 //        // test update
@@ -286,5 +300,47 @@ public class Bootstrap {
 
 
     }
+
+    private void addOfferAndNotify() {
+        List<String> categoryNames1 = new ArrayList<>();
+        categoryNames1.add(GROUP);
+        categoryNames1.add(PHYSICAL);
+
+        OfferDto offerDto1 =new OfferDtoBuilder()
+                .setName(OFFER1_NAME)
+                .setPrice(200)
+                .setInStock(20)
+                .setLocation("Cimitirul de Masini")
+                .setDescription("Impuscaturi colorate")
+                .setAgent(2L)
+                .setImage("pusca.jpg")
+                .setNoPersons(10)
+                .setDatePublished(new Date())
+                .setCategories(categoryNames1)
+                .setInitialNo(54)
+                .setMinQuantity(2)
+                .setPercentage(20)
+                .build();
+        OfferDto backOfferDto =offerService.create(offerDto1);
+        emailService.sendEmail(OFFER_NOTIFICATION_TYPE, backOfferDto);
+    }
+
+    private void addReviewAndNotify() {
+        ReviewDto reviewDto1 = new ReviewDto(null, 1L, 4L, new Date(), 1, "Oribil tare!", CUSTOMER1_USERNAME, OFFER1_NAME);
+        ReviewDto backReviewDto =reviewService.create(reviewDto1);
+        emailService.sendEmail(REVIEW_NOTIFICATION_TYPE, backReviewDto);
+    }
+
+    private void addSaleAndNotify() {
+        SaleDto saleDto1 = new SaleDto(4L, 1L, 1, new Date());
+        try {
+           SaleDto backSaleDto = saleService.sell(saleDto1);
+           emailService.sendEmail(SALE_CONFIRMATION_TYPE, backSaleDto);
+        } catch (LimittedStockException e) {
+            System.out.print("*******Sale 1-> Should not occur");
+        }
+    }
+
+
 }
 

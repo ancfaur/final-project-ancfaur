@@ -3,28 +3,39 @@ import offersApp.converter.user.UserConverter;
 import offersApp.dto.UserDto;
 import offersApp.entity.Role;
 import offersApp.entity.User;
+import offersApp.repository.OfferRepository;
+import offersApp.repository.ReviewRepository;
 import offersApp.repository.RoleRepository;
 import offersApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static offersApp.constants.ApplicationConstants.Roles.AGENT;
+import static offersApp.constants.ApplicationConstants.Roles.CUSTOMER;
+
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
     private UserRepository userRepository;
     private UserConverter userConverter;
+    private OfferRepository offerRepository;
+    private ReviewRepository reviewRepository;
     private final BCryptPasswordEncoder encoder =  new BCryptPasswordEncoder();
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter, RoleRepository roleRepository){
+    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter, RoleRepository roleRepository, OfferRepository offerRepository, ReviewRepository reviewRepository){
         this.userRepository = userRepository;
         this.userConverter = userConverter;
         this.roleRepository = roleRepository;
+        this.offerRepository = offerRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     private List<Role> findRoleByName(String roleName){
@@ -43,7 +54,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) {
         User user = userRepository.findById(id).orElse(null);
+        deleteDependecies(user);
         userRepository.delete(user);
+    }
+
+    private void deleteDependecies(User user) {
+        if (user.getRoles().get(0).getName().equals(AGENT)){
+            offerRepository.deleteByAgent(user);
+        }
+        if (user.getRoles().get(0).getName().equals(CUSTOMER)){
+            reviewRepository.deleteByUser(user);
+        }
     }
 
     @Override
@@ -85,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void removeAll(){
+    public void deleteAll(){
         userRepository.deleteAll();
     }
 
