@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="692.0" y="0.0">offersApp.service.review.ReviewService</node>
+    <node x="0.0" y="343.0">offersApp.service.category.CategoryServiceImpl</node>
+    <node x="338.0000000000001" y="681.0">offersApp.service.imageStorage.StorageService</node>
+    <node x="865.0" y="1142.0">offersApp.repository.CategoryRepository</node>
+    <node x="338.0000000000001" y="870.0">offersApp.service.imageStorage.FileSystemStorageService</node>
+    <node x="1.1368683772161603E-13" y="914.0">offersApp.service.offer.manage.OfferServiceImpl</node>
+    <node x="511.0" y="1282.0">offersApp.repository.DiscountRepository</node>
+    <node x="0.0" y="1282.0">offersApp.repository.UserRepository</node>
+    <node x="626.0000000000001" y="782.0">offersApp.service.sale.SaleServiceImpl</node>
+    <node x="266.0" y="1282.0">offersApp.repository.RoleRepository</node>
+    <node x="370.0" y="0.0">offersApp.service.user.UserService</node>
+    <node x="707.0" y="1282.0">offersApp.repository.SaleRepository</node>
+    <node x="590.0" y="1142.0">offersApp.repository.OfferRepository</node>
+    <node x="1071.0" y="681.0">offersApp.service.email.EmailService</node>
+    <node x="0.0" y="0.0">offersApp.service.category.CategoryService</node>
+    <node x="737.5000000000001" y="681.0">offersApp.service.sale.SaleService</node>
+    <node x="692.0" y="233.0">offersApp.service.review.ReviewServiceImpl</node>
+    <node x="284.0" y="1142.0">offersApp.service.offer.search.OfferSearchImpl</node>
+    <node x="370.0" y="277.0">offersApp.service.user.UserServiceImpl</node>
+    <node x="1071.0" y="782.0">offersApp.service.email.EmailServiceImpl</node>
+    <node x="0.0" y="681.0">offersApp.service.offer.manage.OfferService</node>
+    <node x="0.0" y="1142.0">offersApp.repository.ReviewRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="offersApp.service.user.UserServiceImpl" target="offersApp.service.user.UserService">
+      <point x="0.0" y="-135.5" />
+      <point x="0.0" y="113.5" />
+    </edge>
+    <edge source="offersApp.service.email.EmailServiceImpl" target="offersApp.service.email.EmailService">
+      <point x="0.0" y="-25.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="offersApp.service.category.CategoryServiceImpl" target="offersApp.service.category.CategoryService">
+      <point x="0.0" y="-146.5" />
+      <point x="0.0" y="146.5" />
+    </edge>
+    <edge source="offersApp.service.sale.SaleServiceImpl" target="offersApp.service.sale.SaleService">
+      <point x="0.0" y="-47.5" />
+      <point x="0.0" y="25.5" />
+    </edge>
+    <edge source="offersApp.service.imageStorage.FileSystemStorageService" target="offersApp.service.imageStorage.StorageService">
+      <point x="0.0" y="-69.5" />
+      <point x="0.0" y="69.5" />
+    </edge>
+    <edge source="offersApp.service.review.ReviewServiceImpl" target="offersApp.service.review.ReviewService">
+      <point x="0.0" y="-91.5" />
+      <point x="0.0" y="91.5" />
+    </edge>
+    <edge source="offersApp.service.offer.manage.OfferServiceImpl" target="offersApp.service.offer.manage.OfferService">
+      <point x="-1.1368683772161603E-13" y="-91.5" />
+      <point x="0.0" y="91.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="506.0" y="776.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

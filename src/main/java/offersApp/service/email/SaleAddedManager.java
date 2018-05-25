@@ -2,6 +2,7 @@ package offersApp.service.email;
 
 import offersApp.constants.mailTemplates.EmailTemplate;
 import offersApp.dto.SaleDto;
+import offersApp.dto.email.MailContentDto;
 import offersApp.dto.email.SaleConfirmationDto;
 import offersApp.entity.Offer;
 import offersApp.entity.User;
@@ -33,7 +34,7 @@ public class SaleAddedManager implements SpecificManager {
         SaleDto saleDto = (SaleDto) object;
         User customer = userRepository.findById(saleDto.getCustomerId()).orElse(null);
         Offer offer = offerRepository.findById(saleDto.getOfferId()).orElse(null);
-        SaleConfirmationDto saleConfirmationDto = new SaleConfirmationDto(customer.getUsername(),customer.getEmail(), offer.getName(), saleDto.getQuantity(), saleDto.isWithDiscount(), offer.getDiscount().getMinQuantity(), offer.getDiscount().getPercentDiscountPerOffer(), saleDto.getSumToPay(), saleDto.getId());
+        MailContentDto saleConfirmationDto = new SaleConfirmationDto(customer.getUsername(), customer.getEmail(), offer.getName(), saleDto.getQuantity(), saleDto.isWithDiscount(), offer.getDiscount().getMinQuantity(), offer.getDiscount().getPercentDiscountPerOffer(), saleDto.getSumToPay(), saleDto.getId());
         emailSender.configureAndSend(SALE_CONFIRMATION_SUBJECT, confirmationSaleTemplate, saleConfirmationDto);
     }
 

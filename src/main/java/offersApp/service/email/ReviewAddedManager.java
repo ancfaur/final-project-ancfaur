@@ -2,6 +2,7 @@ package offersApp.service.email;
 
 import offersApp.constants.mailTemplates.EmailTemplate;
 import offersApp.dto.ReviewDto;
+import offersApp.dto.email.MailContentDto;
 import offersApp.dto.email.ReviewNotificationDto;
 import offersApp.entity.Offer;
 import offersApp.repository.OfferRepository;
@@ -28,7 +29,7 @@ public class ReviewAddedManager implements SpecificManager {
     public void manage(Object object) {
         ReviewDto reviewDto = (ReviewDto) object;
         Offer offer = offerRepository.findById(reviewDto.getOfferId()).orElse(null);
-        ReviewNotificationDto reviewNotificationDto = new ReviewNotificationDto(offer.getAgent().getUsername(), offer.getAgent().getEmail(), getReviewNotificationLink(reviewDto));
+        MailContentDto reviewNotificationDto = new ReviewNotificationDto(offer.getAgent().getUsername(), offer.getAgent().getEmail(), getReviewNotificationLink(reviewDto));
         emailSender.configureAndSend(REVIEW_NOTIFICATION_SUBJECT, notifyReviewTemplate, reviewNotificationDto);
     }
 

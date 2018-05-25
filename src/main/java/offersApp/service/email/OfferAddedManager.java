@@ -2,6 +2,7 @@ package offersApp.service.email;
 
 import offersApp.constants.mailTemplates.EmailTemplate;
 import offersApp.dto.OfferDto;
+import offersApp.dto.email.MailContentDto;
 import offersApp.dto.email.OfferNotificationDto;
 import offersApp.entity.Category;
 import offersApp.entity.User;
@@ -53,7 +54,7 @@ public class OfferAddedManager implements SpecificManager {
         }
 
         for (Map.Entry<User, List<String>> entry : userCategories.entrySet()) {
-            OfferNotificationDto offerNotificationDto = new OfferNotificationDto(entry.getKey().getUsername(), entry.getKey().getEmail(), offerDto.getName(), entry.getValue(), getLinkOffer(offerDto.getId()), getLinkUnsubcribe());
+            MailContentDto offerNotificationDto = new OfferNotificationDto(entry.getKey().getUsername(), entry.getKey().getEmail(), offerDto.getName(), entry.getValue(), getLinkOffer(offerDto.getId()), getLinkUnsubcribe());
             emailSender.configureAndSend(OFFER_NOTIFICATION_SUBJECT, notifyOfferTemplate, offerNotificationDto);
         }
     }
