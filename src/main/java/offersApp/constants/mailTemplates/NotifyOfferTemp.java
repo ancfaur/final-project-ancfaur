@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class NotifyOfferTemplateImpl implements EmailTemplate {
+public class NotifyOfferTemp implements EmailTemplate {
     public static final String HEADER = "Dear customer ";
     public static final String INTRODUCTION = "A new offer has been added that might interest you.";
     public static final String ENDING = "Hope this was helpful for you! \n\n XOXO, \nbestOffers.com";
@@ -18,7 +18,8 @@ public class NotifyOfferTemplateImpl implements EmailTemplate {
     public String linkOffer;
     public String linkUnsubscribe;
 
-    public NotifyOfferTemplateImpl(){}
+    public NotifyOfferTemp() {
+    }
 
     @Override
     public void customizeMessage(MailContentDto o) {

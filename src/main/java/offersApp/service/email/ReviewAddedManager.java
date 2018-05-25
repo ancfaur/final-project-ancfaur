@@ -1,11 +1,12 @@
 package offersApp.service.email;
 
-import offersApp.constants.mailTemplates.NotifyReviewTemplateImpl;
+import offersApp.constants.mailTemplates.EmailTemplate;
 import offersApp.dto.ReviewDto;
 import offersApp.dto.email.ReviewNotificationDto;
 import offersApp.entity.Offer;
 import offersApp.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import static offersApp.constants.ApplicationConstants.EmailSubjects.REVIEW_NOTIFICATION_SUBJECT;
@@ -14,10 +15,10 @@ import static offersApp.constants.ApplicationConstants.EmailSubjects.REVIEW_NOTI
 public class ReviewAddedManager implements SpecificManager {
     private OfferRepository offerRepository;
     private EmailSender emailSender;
-    private NotifyReviewTemplateImpl notifyReviewTemplate;
+    private EmailTemplate notifyReviewTemplate;
 
     @Autowired
-    public ReviewAddedManager(OfferRepository offerRepository, EmailSender emailSender, NotifyReviewTemplateImpl notifyReviewTemplate) {
+    public ReviewAddedManager(OfferRepository offerRepository, EmailSender emailSender, @Qualifier("notifyReviewTemp") EmailTemplate notifyReviewTemplate) {
         this.offerRepository = offerRepository;
         this.emailSender = emailSender;
         this.notifyReviewTemplate = notifyReviewTemplate;

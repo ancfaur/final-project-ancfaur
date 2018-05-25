@@ -1,12 +1,13 @@
 package offersApp.service.email;
 
-import offersApp.constants.mailTemplates.NotifyOfferTemplateImpl;
+import offersApp.constants.mailTemplates.EmailTemplate;
 import offersApp.dto.OfferDto;
 import offersApp.dto.email.OfferNotificationDto;
 import offersApp.entity.Category;
 import offersApp.entity.User;
 import offersApp.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ import static offersApp.constants.ApplicationConstants.EmailSubjects.OFFER_NOTIF
 public class OfferAddedManager implements SpecificManager {
     private CategoryRepository categoryRepository;
     private EmailSender emailSender;
-    private NotifyOfferTemplateImpl notifyOfferTemplate;
+    private EmailTemplate notifyOfferTemplate;
 
     @Autowired
-    public OfferAddedManager(CategoryRepository categoryRepository, EmailSender emailSender, NotifyOfferTemplateImpl notifyOfferTemplate) {
+    public OfferAddedManager(CategoryRepository categoryRepository, EmailSender emailSender, @Qualifier("notifyOfferTemp") EmailTemplate notifyOfferTemplate) {
         this.categoryRepository = categoryRepository;
         this.emailSender = emailSender;
         this.notifyOfferTemplate = notifyOfferTemplate;

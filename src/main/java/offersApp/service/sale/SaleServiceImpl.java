@@ -1,7 +1,6 @@
 package offersApp.service.sale;
 
 import offersApp.converter.sale.SaleConverter;
-import offersApp.dto.email.SaleConfirmationDto;
 import offersApp.dto.SaleDto;
 import offersApp.entity.Offer;
 import offersApp.entity.Sale;
@@ -43,10 +42,11 @@ public class SaleServiceImpl implements SaleService {
         float sum = computeSumConsideringDiscount(withDiscount, saleDto.getQuantity(), offer.getPrice(), offer.getDiscount().getPercentDiscountPerOffer());
 
         Sale sale = saleConverter.fromDto(saleDto, customer, offer, sum);
-        saleRepository.save(sale);
+        Sale saleBack = saleRepository.save(sale);
 
         offer.setInStock(offer.getInStock() - saleDto.getQuantity());
         offerRepository.save(offer);
+        saleDto.setId(saleBack.getId());
         saleDto.setSumToPay(sum);
         saleDto.setWithDiscount(withDiscount);
         return saleDto;

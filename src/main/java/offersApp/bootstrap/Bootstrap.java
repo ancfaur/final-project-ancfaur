@@ -2,7 +2,7 @@ package offersApp.bootstrap;
 
 import offersApp.dto.*;
 import offersApp.dto.builder.OfferDtoBuilder;
-import offersApp.entity.*;
+import offersApp.entity.Role;
 import offersApp.repository.RoleRepository;
 import offersApp.service.category.CategoryService;
 import offersApp.service.email.EmailService;
@@ -15,15 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static offersApp.constants.ApplicationConstants.Categories.*;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.OFFER_NOTIFICATION_TYPE;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.REVIEW_NOTIFICATION_TYPE;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.SALE_CONFIRMATION_TYPE;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.*;
 import static offersApp.constants.ApplicationConstants.Roles.*;
 
 @Component
@@ -75,7 +72,6 @@ public class Bootstrap {
         // updateCategoryAfterAll();
 
     }
-
 
     private void addRoles(){
         Role adminRole = new Role(ADMINISTRATOR);
@@ -152,10 +148,6 @@ public class Bootstrap {
         for (String categoryName: categoryNames2){
             categoryService.subscribeUser(categoryName, back2.getId());
         }
-
-        // test unsubscribe
-        //categoryService.unsubscribeUser(ROMANTIC, back2.getId());
-        //categoryService.unsubscribeUser(NIGHTLIFE, back2.getId());
 
     }
 
@@ -239,11 +231,6 @@ public class Bootstrap {
 
     }
 
-    private void updateCategoryAfterAll(){
-        CategoryDto categoryDto = new CategoryDto(10L, "romantic", 0);
-        categoryService.update(categoryDto);
-    }
-
     private void addSales(){
 
         // alowed with no discount
@@ -282,22 +269,12 @@ public class Bootstrap {
         ReviewDto reviewDto6 = new ReviewDto(null, 3L, 5L, new Date(), 5,"minunat",CUSTOMER2_USERNAME, OFFER3_NAME);
 
 
-        ReviewDto back1 =reviewService.create(reviewDto1);
-        ReviewDto back2 =reviewService.create(reviewDto2);
+        reviewService.create(reviewDto1);
+        reviewService.create(reviewDto2);
         reviewService.create(reviewDto3);
         reviewService.create(reviewDto4);
         reviewService.create(reviewDto5);
         reviewService.create(reviewDto6);
-
-
-//        // test update
-//        reviewDto1.setId(back1.getId());
-//        reviewDto1.setDescription("A fost okay, dar se putea mai bine");
-//        reviewService.update(reviewDto1);
-
-//        // test delete
-//        reviewService.delete(back2.getId());
-
 
     }
 
@@ -307,7 +284,7 @@ public class Bootstrap {
         categoryNames1.add(PHYSICAL);
 
         OfferDto offerDto1 =new OfferDtoBuilder()
-                .setName(OFFER1_NAME)
+                .setName("Tras cu arma in echipe")
                 .setPrice(200)
                 .setInStock(20)
                 .setLocation("Cimitirul de Masini")

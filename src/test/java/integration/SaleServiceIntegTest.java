@@ -5,6 +5,8 @@ import offersApp.dto.OfferDto;
 import offersApp.dto.SaleDto;
 import offersApp.dto.UserDto;
 import offersApp.dto.builder.OfferDtoBuilder;
+import offersApp.entity.Role;
+import offersApp.repository.RoleRepository;
 import offersApp.service.category.CategoryService;
 import offersApp.service.offer.manage.OfferService;
 import offersApp.service.review.ReviewService;
@@ -27,9 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static offersApp.constants.ApplicationConstants.Categories.CATEGORIES;
-import static offersApp.constants.ApplicationConstants.Categories.PHYSICAL;
-import static offersApp.constants.ApplicationConstants.Categories.ROMANTIC;
+import static offersApp.constants.ApplicationConstants.Categories.*;
 import static offersApp.constants.ApplicationConstants.Roles.AGENT;
 import static offersApp.constants.ApplicationConstants.Roles.CUSTOMER;
 
@@ -50,6 +50,8 @@ public class SaleServiceIntegTest {
     private ReviewService reviewService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RoleRepository roleRepository;
 
 
     private SaleDto saleDto;
@@ -67,11 +69,13 @@ public class SaleServiceIntegTest {
     @Before
     public void setup(){
         offerService.deleteAll();
-        reviewService.deleteAll();
-        userService.deleteAll();
         categoryService.deleteAll();
+        roleRepository.deleteAll();
+        userService.deleteAll();
 
-        System.out.println("**************start");
+        roleRepository.save(new Role(AGENT));
+        roleRepository.save(new Role(CUSTOMER));
+
         UserDto agent1 = new UserDto();
         agent1.setUsername("agent1@yahoo.com");
         agent1.setPassword("Agent1#");

@@ -1,20 +1,19 @@
 package offersApp.service.offer.search.order;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static offersApp.constants.ApplicationConstants.Ordering.NO_STARS;
-import static offersApp.constants.ApplicationConstants.Ordering.PERCENT_DISCOUNT;
-import static offersApp.constants.ApplicationConstants.Ordering.PRICE;
+import static offersApp.constants.ApplicationConstants.Ordering.*;
 
 @Component
 public class OrderingDelegator {
-    private OrderByPrice orderByPrice;
-    private OrderByDiscount orderByDiscount;
-    private OrderByStarsNo orderByStarsNo;
+    private Ordering orderByPrice;
+    private Ordering orderByDiscount;
+    private Ordering orderByStarsNo;
 
     @Autowired
-    public OrderingDelegator(OrderByPrice orderByPrice, OrderByDiscount orderByDiscount, OrderByStarsNo orderByStarsNo) {
+    public OrderingDelegator(@Qualifier("orderByPrice") Ordering orderByPrice, @Qualifier("orderByDiscount") Ordering orderByDiscount, @Qualifier("orderByStarsNo") Ordering orderByStarsNo) {
         this.orderByPrice = orderByPrice;
         this.orderByDiscount = orderByDiscount;
         this.orderByStarsNo = orderByStarsNo;

@@ -70,4 +70,9 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteAll() {
         reviewRepository.deleteAll();
     }
+
+    @Override
+    public List<ReviewDto> findAll() {
+        return reviewConverter.toDto(reviewRepository.findAll());
+    }
 }

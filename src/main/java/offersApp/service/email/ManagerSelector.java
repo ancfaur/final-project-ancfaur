@@ -1,20 +1,19 @@
 package offersApp.service.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import static offersApp.constants.ApplicationConstants.EmailTemplates.OFFER_NOTIFICATION_TYPE;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.REVIEW_NOTIFICATION_TYPE;
-import static offersApp.constants.ApplicationConstants.EmailTemplates.SALE_CONFIRMATION_TYPE;
+import static offersApp.constants.ApplicationConstants.EmailTemplates.*;
 
 @Component
 public class ManagerSelector {
-    private SaleAddedManager saleAddedManager;
-    private OfferAddedManager offerAddedManager;
-    private ReviewAddedManager reviewAddedManager;
+    private SpecificManager saleAddedManager;
+    private SpecificManager offerAddedManager;
+    private SpecificManager reviewAddedManager;
 
     @Autowired
-    public ManagerSelector(SaleAddedManager saleAddedManager, OfferAddedManager offerAddedManager, ReviewAddedManager reviewAddedManager) {
+    public ManagerSelector(@Qualifier("saleAddedManager") SpecificManager saleAddedManager, @Qualifier("offerAddedManager") SpecificManager offerAddedManager, @Qualifier("reviewAddedManager") SpecificManager reviewAddedManager) {
         this.saleAddedManager = saleAddedManager;
         this.offerAddedManager = offerAddedManager;
         this.reviewAddedManager = reviewAddedManager;

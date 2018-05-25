@@ -4,10 +4,9 @@ import offersApp.dto.email.MailContentDto;
 import offersApp.dto.email.SaleConfirmationDto;
 import offersApp.service.email.MailNotCustomizedException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 @Component
-public class ConfirmationSaleTemplateImpl implements EmailTemplate {
+public class ConfirmSaleTemp implements EmailTemplate {
     public static final String HEADER = "Dear customer ";
     public static final String INTRODUCTION = "Thank you for your order. \n\nThe resume of your command is:\n";
     public static final String ENDING = "Please present the sale id to the agent when requiring the service. Have a great experience.\n\n XOXO, \nbestOffers.com";
@@ -20,7 +19,6 @@ public class ConfirmationSaleTemplateImpl implements EmailTemplate {
     private int minQuantityForDiscount;
     private int percentagePerOffer;
 
-    public ConfirmationSaleTemplateImpl() {}
 
     @Override
     public void customizeMessage(MailContentDto o) {
