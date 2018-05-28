@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import static offersApp.constants.ApplicationConstants.EmailSubjects.SALE_CONFIRMATION_SUBJECT;
 
 @Component
-public class SaleAddedManager implements SpecificManager {
+public class SaleAddedManager implements SpecificManager<SaleDto> {
     private UserRepository userRepository;
     private OfferRepository offerRepository;
     private EmailSender emailSender;
@@ -30,8 +30,7 @@ public class SaleAddedManager implements SpecificManager {
     }
 
     @Override
-    public void manage(Object object) {
-        SaleDto saleDto = (SaleDto) object;
+    public void manage(SaleDto saleDto) {
         User customer = userRepository.findById(saleDto.getCustomerId()).orElse(null);
         Offer offer = offerRepository.findById(saleDto.getOfferId()).orElse(null);
         MailContentDto saleConfirmationDto = new SaleConfirmationDto(customer.getUsername(), customer.getEmail(), offer.getName(), saleDto.getQuantity(), saleDto.isWithDiscount(), offer.getDiscount().getMinQuantity(), offer.getDiscount().getPercentDiscountPerOffer(), saleDto.getSumToPay(), saleDto.getId());

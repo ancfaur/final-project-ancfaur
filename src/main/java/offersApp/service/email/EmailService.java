@@ -1,5 +1,5 @@
 package offersApp.service.email;
 
-public interface EmailService {
-   void sendEmail(String mailType, Object objectDto);
+public interface EmailService<T> {
+   void sendEmail(String mailType, T t);
 }

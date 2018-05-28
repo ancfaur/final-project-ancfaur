@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl<T> implements EmailService<T> {
    private SpecificManager specificManager;
    private ManagerSelector managerSelector;
 
@@ -14,8 +14,8 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmail(String mailType, Object objectDto) {
+    public void sendEmail(String mailType, T t) {
        specificManager = managerSelector.selectManager(mailType);
-       specificManager.manage(objectDto);
+        specificManager.manage(t);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Map;
 import static offersApp.constants.ApplicationConstants.EmailSubjects.OFFER_NOTIFICATION_SUBJECT;
 
 @Component
-public class OfferAddedManager implements SpecificManager {
+public class OfferAddedManager implements SpecificManager<OfferDto> {
     private CategoryRepository categoryRepository;
     private EmailSender emailSender;
     private EmailTemplate notifyOfferTemplate;
@@ -32,8 +32,7 @@ public class OfferAddedManager implements SpecificManager {
     }
 
     @Override
-    public void manage(Object object) {
-        OfferDto offerDto = (OfferDto) object;
+    public void manage(OfferDto offerDto) {
         List<Category> categories = new ArrayList<>();
         for (String categoryName : offerDto.getCategories()) {
             categories.add(categoryRepository.findByName(categoryName));

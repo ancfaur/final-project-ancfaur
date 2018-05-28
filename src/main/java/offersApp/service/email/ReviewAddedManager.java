@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import static offersApp.constants.ApplicationConstants.EmailSubjects.REVIEW_NOTIFICATION_SUBJECT;
 
 @Component
-public class ReviewAddedManager implements SpecificManager {
+public class ReviewAddedManager implements SpecificManager<ReviewDto> {
     private OfferRepository offerRepository;
     private EmailSender emailSender;
     private EmailTemplate notifyReviewTemplate;
@@ -26,8 +26,7 @@ public class ReviewAddedManager implements SpecificManager {
     }
 
     @Override
-    public void manage(Object object) {
-        ReviewDto reviewDto = (ReviewDto) object;
+    public void manage(ReviewDto reviewDto) {
         Offer offer = offerRepository.findById(reviewDto.getOfferId()).orElse(null);
         MailContentDto reviewNotificationDto = new ReviewNotificationDto(offer.getAgent().getUsername(), offer.getAgent().getEmail(), getReviewNotificationLink(reviewDto));
         emailSender.configureAndSend(REVIEW_NOTIFICATION_SUBJECT, notifyReviewTemplate, reviewNotificationDto);

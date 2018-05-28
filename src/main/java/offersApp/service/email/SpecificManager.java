@@ -1,5 +1,5 @@
 package offersApp.service.email;
 
-public interface SpecificManager {
-    void manage(Object object);
+public interface SpecificManager<T> {
+    void manage(T t);
 }
