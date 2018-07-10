@@ -1,4 +1,4 @@
-This is the one of the assignments for the Software Design course and it uses the Spring Framework.
+This is one of the assignments for the Software Design course and it uses the Spring Framework.
 	
 I tried my best to respect the SOLID Design Principles and to implement some design patterns such as Decorator, Builder and a pseudo-Factory (as the actual creation of the components was ensured by Spring).
 
